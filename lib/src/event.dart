@@ -1,9 +1,9 @@
 import 'package:widget_event/widget_event.dart';
 
-/// Interactive events that [Anchor] can take on
+/// Interactive events that [WxAnchor] can take on
 /// when receiving input from the user.
-abstract class WxAnchorEvent extends WidgetEvent {
-  const WxAnchorEvent(String value) : super(value);
+class WxAnchorEvent extends WidgetEvent {
+  const WxAnchorEvent(super.value);
 
   /// The state when this widget is disabled and cannot be interacted with.
   static const disabled = WidgetEvent.disabled;
