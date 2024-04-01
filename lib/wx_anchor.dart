@@ -1,7 +1,8 @@
 library wx_anchor;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/event.dart';
+export 'src/style.dart';
+export 'src/theme_data.dart';
+export 'src/theme_preset.dart';
+export 'src/theme.dart';
+export 'src/widget.dart';
