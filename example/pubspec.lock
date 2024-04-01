@@ -41,14 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
-  cupertino_icons:
-    dependency: "direct main"
-    description:
-      name: cupertino_icons
-      sha256: d57953e10f9f8327ce64a508a355f0b1ec902193f66288e8cb5070e7c47eeb2d
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.6"
   fake_async:
     dependency: transitive
     description:
@@ -99,6 +91,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  lerp:
+    dependency: transitive
+    description:
+      name: lerp
+      sha256: "1ba403fcda97d6a06f4a4df9b5af0b342364dde6032162b48f9db0f075acb78b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   lints:
     dependency: transitive
     description:
@@ -208,5 +208,29 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "13.0.0"
+  widget_event:
+    dependency: transitive
+    description:
+      name: widget_event
+      sha256: "14013fbdc15370ba0244a14cd0c24d11a5a0418062bcf06fb99dc69a20885e1a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.8"
+  wx_anchor:
+    dependency: "direct main"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "0.0.1"
+  wx_utils:
+    dependency: transitive
+    description:
+      name: wx_utils
+      sha256: "6ea9432692803e388153f750cb88d472371a643a1048407ac737c8f7ee95570c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
 sdks:
   dart: ">=3.3.1 <4.0.0"
+  flutter: ">=1.17.0"
