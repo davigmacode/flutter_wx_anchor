@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:widget_event/widget_event.dart';
@@ -169,7 +171,7 @@ class Anchor extends StatelessWidget {
     final anchorTheme = AnchorTheme.of(context);
     final themedStyle = anchorTheme.style.merge(effectiveStyle);
     final parentState = _AnchorProvider.of(context);
-    return _Anchor(
+    return _AnchorRender(
       parentState: parentState,
       curve: curve ?? anchorTheme.curve,
       duration: duration ?? anchorTheme.duration,
@@ -221,8 +223,8 @@ class Anchor extends StatelessWidget {
   }
 }
 
-class _Anchor extends StatefulWidget {
-  const _Anchor({
+class _AnchorRender extends StatefulWidget {
+  const _AnchorRender({
     this.parentState,
     required this.curve,
     required this.duration,
@@ -244,7 +246,7 @@ class _Anchor extends StatefulWidget {
     this.child,
   });
 
-  final _AnchorState? parentState;
+  final _AnchorRenderState? parentState;
   final Curve curve;
   final Duration duration;
   final VoidCallback? onTap;
@@ -279,7 +281,7 @@ class _Anchor extends StatefulWidget {
       clickable ? DrivenMouseCursor.clickable : MouseCursor.defer;
 
   @override
-  State<_Anchor> createState() => _AnchorState();
+  State<_AnchorRender> createState() => _AnchorRenderState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -288,7 +290,8 @@ class _Anchor extends StatefulWidget {
   }
 }
 
-class _AnchorState extends State<_Anchor> with WidgetEventMixin<_Anchor> {
+class _AnchorRenderState extends State<_AnchorRender>
+    with WidgetEventMixin<_AnchorRender> {
   bool childrenActive = false;
 
   AnchorStyle style = const AnchorStyle();
@@ -313,7 +316,6 @@ class _AnchorState extends State<_Anchor> with WidgetEventMixin<_Anchor> {
 
   void _onTap() {
     if (!childrenActive) {
-      widgetEvents.toggle(WidgetEvent.pressed, false);
       widget.onTap?.call();
     }
   }
@@ -334,7 +336,11 @@ class _AnchorState extends State<_Anchor> with WidgetEventMixin<_Anchor> {
     widget.parentState?.childrenActive = true;
   }
 
-  void _onTapUp(TapUpDetails details) {
+  void _onTapUp(TapUpDetails details) async {
+    if (details.kind == PointerDeviceKind.touch) {
+      await Future.delayed(const Duration(milliseconds: 100));
+    }
+    widgetEvents.toggle(WidgetEvent.pressed, false);
     widget.onTapUp?.call(details);
   }
 
@@ -358,11 +364,10 @@ class _AnchorState extends State<_Anchor> with WidgetEventMixin<_Anchor> {
   }
 
   @override
-  void didUpdateWidget(_Anchor oldWidget) {
+  void didUpdateWidget(_AnchorRender oldWidget) {
     if (mounted) {
       updateWidgetEvents(oldWidget.eventsController, widget.eventsController);
       widgetEvents.toggle(WidgetEvent.disabled, widget.disabled);
-      setStyle();
       super.didUpdateWidget(oldWidget);
     }
   }
@@ -450,13 +455,13 @@ class _AnchorProvider extends InheritedWidget {
     required Widget? child,
   }) : super(child: child ?? const _AnchorPlaceholder());
 
-  final _AnchorState state;
+  final _AnchorRenderState state;
 
   @override
   bool updateShouldNotify(_AnchorProvider oldWidget) =>
       state != oldWidget.state;
 
-  static _AnchorState? of(BuildContext context) {
+  static _AnchorRenderState? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<_AnchorProvider>()?.state;
   }
 }
