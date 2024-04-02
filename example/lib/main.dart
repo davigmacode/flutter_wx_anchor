@@ -60,10 +60,10 @@ class MyHomePage extends StatelessWidget {
                   ),
                   WxAnchor(
                     onTap: () {},
-                    style: const DrivenAnchorStyle.circle(
+                    style: const WxDrivenAnchorStyle.circle(
                       radius: 0,
-                      hoveredStyle: WxAnchorStyle(radius: 20),
-                      pressedStyle: WxAnchorStyle(radius: 0),
+                      hoveredStyle: WxAnchorStyle(radius: 25),
+                      pressedStyle: WxAnchorStyle(radius: 20),
                     ),
                     child: const Icon(Icons.power_off),
                   ),
