@@ -1,39 +1,49 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+[![Pub Version](https://img.shields.io/pub/v/wx_anchor)](https://pub.dev/packages/wx_anchor) ![GitHub](https://img.shields.io/github/license/davigmacode/flutter_wx_anchor) [![GitHub](https://badgen.net/badge/icon/buymeacoffee?icon=buymeacoffee&color=yellow&label)](https://www.buymeacoffee.com/davigmacode) [![GitHub](https://badgen.net/badge/icon/ko-fi?icon=kofi&color=red&label)](https://ko-fi.com/davigmacode)
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+Clickable zone within a widget that activates an interactive overlay upon touch or hover.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+[![Preview](https://github.com/davigmacode/flutter_wx_anchor/raw/main/media/preview.gif)](https://davigmacode.github.io/flutter_wx_anchor)
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+[Demo](https://davigmacode.github.io/flutter_wx_anchor)
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+To read more about classes and other references used by `wx_anchor`, see the [API Reference](https://pub.dev/documentation/wx_anchor/latest/).
 
 ```dart
-const like = 'sample';
+// Rectangle shape
+WxAnchor(
+  onTap: () {},
+  padding: const EdgeInsets.symmetric(
+    horizontal: 10,
+    vertical: 6,
+  ),
+  borderRadius: BorderRadius.circular(5),
+  child: const Text('Click Here'),
+)
+
+// Circle shape
+WxAnchor.circle(
+  onTap: () {},
+  radius: 20,
+  child: const Icon(Icons.chat),
+)
+
+// Circle shape with complex interaction
+WxAnchor(
+  onTap: () {},
+  style: const WxDrivenAnchorStyle.circle(
+    radius: 0,
+    hoveredStyle: WxAnchorStyle(radius: 25),
+    pressedStyle: WxAnchorStyle(radius: 20),
+  ),
+  child: const Icon(Icons.power_off),
+)
 ```
 
-## Additional information
+## Sponsoring
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+<a href="https://www.buymeacoffee.com/davigmacode" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="45"></a>
+<a href="https://ko-fi.com/davigmacode" target="_blank"><img src="https://storage.ko-fi.com/cdn/brandasset/kofi_s_tag_white.png" alt="Ko-Fi" height="45"></a>
+
+If this package or any other package I created is helping you, please consider to sponsor me so that I can take time to read the issues, fix bugs, merge pull requests and add features to these packages.
