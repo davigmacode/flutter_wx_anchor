@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wx_anchor/wx_anchor.dart';
+import 'package:wx_text/wx_text.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,24 +32,82 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Anchor(
-              onTap: () {},
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 6,
+            const SizedBox(height: 40),
+            const WxText.displayMedium('WxAnchor'),
+            const SizedBox(height: 40),
+            Wrapper(
+              title: 'Rectangle Shape',
+              child: WxAnchor(
+                onTap: () {},
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 6,
+                ),
+                borderRadius: BorderRadius.circular(5),
+                child: const Text('Click Here'),
               ),
-              borderRadius: BorderRadius.circular(5),
-              child: const Text('Click Here'),
             ),
             const SizedBox(height: 20),
-            Anchor.circle(
-              onTap: () {},
-              radius: 20,
-              child: const Icon(Icons.chat),
+            Wrapper(
+              title: 'Circle Shape',
+              child: Wrap(
+                spacing: 20,
+                children: [
+                  WxAnchor.circle(
+                    onTap: () {},
+                    radius: 20,
+                    child: const Icon(Icons.chat),
+                  ),
+                  WxAnchor(
+                    onTap: () {},
+                    style: const DrivenAnchorStyle.circle(
+                      radius: 0,
+                      hoveredStyle: WxAnchorStyle(radius: 20),
+                      pressedStyle: WxAnchorStyle(radius: 0),
+                    ),
+                    child: const Icon(Icons.power_off),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class Wrapper extends StatelessWidget {
+  const Wrapper({
+    super.key,
+    required this.title,
+    required this.child,
+  });
+
+  final String title;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+          child: WxText.labelLarge(title),
+        ),
+        Card.outlined(
+          child: SizedBox(
+            width: 250,
+            height: 100,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Center(child: child),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

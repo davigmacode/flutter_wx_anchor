@@ -223,6 +223,14 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  wx_text:
+    dependency: "direct main"
+    description:
+      name: wx_text
+      sha256: "640d78433ade9c84582a8afe9eaefae024b4d4dca8e2c064d385bd12ac3eed25"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   wx_utils:
     dependency: transitive
     description:
