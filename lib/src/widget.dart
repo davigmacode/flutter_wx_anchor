@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:widget_event/widget_event.dart';
 import 'overlay.dart';
 import 'style.dart';
@@ -38,6 +38,7 @@ class Anchor extends StatelessWidget {
     this.focusNode,
     this.autofocus = false,
     this.canRequestFocus = true,
+    this.disabledFeedback = false,
     this.disabled = false,
     this.child,
   });
@@ -67,6 +68,7 @@ class Anchor extends StatelessWidget {
     this.focusNode,
     this.autofocus = false,
     this.canRequestFocus = true,
+    this.disabledFeedback = false,
     this.disabled = false,
     this.child,
   })  : shape = BoxShape.circle,
@@ -147,6 +149,16 @@ class Anchor extends StatelessWidget {
   /// {@macro flutter.widgets.Focus.canRequestFocus}
   final bool canRequestFocus;
 
+  /// Whether detected gestures should disable acoustic and/or haptic feedback.
+  ///
+  /// For example, on Android a tap will produce a clicking sound and a
+  /// long-press will produce a short vibration, when feedback is enabled.
+  ///
+  /// See also:
+  ///
+  ///  * [Feedback] for providing platform-specific feedback to certain actions.
+  final bool disabledFeedback;
+
   /// Whether or not this widget is disabled for interaction.
   final bool disabled;
 
@@ -188,6 +200,7 @@ class Anchor extends StatelessWidget {
       focusNode: focusNode,
       autofocus: autofocus,
       canRequestFocus: canRequestFocus,
+      disabledFeedback: disabledFeedback,
       disabled: disabled,
       style: themedStyle,
       child: child,
@@ -241,6 +254,7 @@ class _AnchorRender extends StatefulWidget {
     this.focusNode,
     this.autofocus = false,
     this.canRequestFocus = true,
+    this.disabledFeedback = false,
     this.disabled = false,
     required this.style,
     this.child,
@@ -262,6 +276,7 @@ class _AnchorRender extends StatefulWidget {
   final FocusNode? focusNode;
   final bool autofocus;
   final bool canRequestFocus;
+  final bool disabledFeedback;
   final bool disabled;
   final AnchorStyle style;
   final Widget? child;
@@ -316,7 +331,12 @@ class _AnchorRenderState extends State<_AnchorRender>
 
   void _onTap() {
     if (!childrenActive) {
-      widget.onTap?.call();
+      if (widget.onTap != null) {
+        if (!widget.disabledFeedback) {
+          Feedback.forTap(context);
+        }
+        widget.onTap?.call();
+      }
     }
   }
 
