@@ -374,7 +374,7 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
 
   void _onTapUp(TapUpDetails details) async {
     if (details.kind == PointerDeviceKind.touch) {
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future.delayed(widget.duration);
     }
     widgetEvents.toggle(WidgetEvent.pressed, false);
     widget.onTapUp?.call(details);
