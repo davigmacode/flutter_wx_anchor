@@ -1,11 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:widget_event/widget_event.dart';
 import 'overlay.dart';
 import 'style.dart';
 import 'theme.dart';
+import 'feedback.dart';
 
 /// An area that responds to touch.
 /// Has a configurable shape and can be configured
@@ -187,6 +188,7 @@ class Anchor extends StatelessWidget {
       parentState: parentState,
       curve: curve ?? anchorTheme.curve,
       duration: duration ?? anchorTheme.duration,
+      platform: anchorTheme.platform,
       onTap: onTap,
       onTapUp: onTapUp,
       onTapDown: onTapDown,
@@ -241,6 +243,7 @@ class _AnchorRender extends StatefulWidget {
     this.parentState,
     required this.curve,
     required this.duration,
+    required this.platform,
     this.onTap,
     this.onTapUp,
     this.onTapDown,
@@ -263,6 +266,7 @@ class _AnchorRender extends StatefulWidget {
   final _AnchorRenderState? parentState;
   final Curve curve;
   final Duration duration;
+  final TargetPlatform platform;
   final VoidCallback? onTap;
   final GestureTapUpCallback? onTapUp;
   final GestureTapDownCallback? onTapDown;
@@ -333,7 +337,7 @@ class _AnchorRenderState extends State<_AnchorRender>
     if (!childrenActive) {
       if (widget.onTap != null) {
         if (!widget.disabledFeedback) {
-          Feedback.forTap(context);
+          Feedback.forTap(context, widget.platform);
         }
         widget.onTap?.call();
       }

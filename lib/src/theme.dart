@@ -24,6 +24,7 @@ class AnchorTheme extends InheritedTheme {
     Key? key,
     Curve? curve,
     Duration? duration,
+    TargetPlatform? platform,
     AnchorStyle? style,
     AnchorThemeData? data,
     required Widget child,
@@ -36,6 +37,7 @@ class AnchorTheme extends InheritedTheme {
           data: parent.merge(data).copyWith(
                 curve: curve,
                 duration: duration,
+                platform: platform,
                 style: style,
               ),
           child: child,

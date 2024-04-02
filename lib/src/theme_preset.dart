@@ -1,15 +1,13 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'style.dart';
 import 'theme_data.dart';
 
 @immutable
 class AnchorThemeDefaults extends AnchorThemeData {
-  AnchorThemeDefaults(
-    this.context, [
-    AnchorThemeData? other,
-  ]) : super.from(other);
-
-  final BuildContext context;
+  AnchorThemeDefaults(BuildContext context)
+      : super.from(AnchorThemeData.fallback.copyWith(
+          platform: Theme.of(context).platform,
+        ));
 
   @override
   get style => const DrivenAnchorStyle(
