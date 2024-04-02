@@ -39,7 +39,7 @@ class Anchor extends StatelessWidget {
     this.focusNode,
     this.autofocus = false,
     this.canRequestFocus = true,
-    this.disabledFeedback = false,
+    this.feedbackDisabled = false,
     this.disabled = false,
     this.child,
   });
@@ -69,7 +69,7 @@ class Anchor extends StatelessWidget {
     this.focusNode,
     this.autofocus = false,
     this.canRequestFocus = true,
-    this.disabledFeedback = false,
+    this.feedbackDisabled = false,
     this.disabled = false,
     this.child,
   })  : shape = BoxShape.circle,
@@ -158,7 +158,7 @@ class Anchor extends StatelessWidget {
   /// See also:
   ///
   ///  * [Feedback] for providing platform-specific feedback to certain actions.
-  final bool disabledFeedback;
+  final bool feedbackDisabled;
 
   /// Whether or not this widget is disabled for interaction.
   final bool disabled;
@@ -183,7 +183,7 @@ class Anchor extends StatelessWidget {
   Widget build(BuildContext context) {
     final anchorTheme = AnchorTheme.of(context);
     final themedStyle = anchorTheme.style.merge(effectiveStyle);
-    final parentState = _AnchorProvider.of(context);
+    final parentState = _AnchorRenderProvider.of(context);
     return _AnchorRender(
       parentState: parentState,
       curve: curve ?? anchorTheme.curve,
@@ -202,7 +202,7 @@ class Anchor extends StatelessWidget {
       focusNode: focusNode,
       autofocus: autofocus,
       canRequestFocus: canRequestFocus,
-      disabledFeedback: disabledFeedback,
+      feedbackDisabled: feedbackDisabled,
       disabled: disabled,
       style: themedStyle,
       child: child,
@@ -212,7 +212,19 @@ class Anchor extends StatelessWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
+    final List<String> gestures = <String>[
+      if (onTap != null) 'tap',
+      if (onDoubleTap != null) 'double tap',
+      if (onLongPress != null) 'long press',
+      if (onTapDown != null) 'tap down',
+      if (onTapUp != null) 'tap up',
+      if (onTapCancel != null) 'tap cancel',
+    ];
+    properties
+        .add(IterableProperty<String>('gestures', gestures, ifEmpty: '<none>'));
     properties.add(DiagnosticsProperty<bool>('disabled', disabled));
+    properties
+        .add(DiagnosticsProperty<bool>('feedbackDisabled', feedbackDisabled));
     properties
         .add(DiagnosticsProperty<bool>('canRequestFocus', canRequestFocus));
     properties.add(DiagnosticsProperty<bool>('autofocus', autofocus));
@@ -257,7 +269,7 @@ class _AnchorRender extends StatefulWidget {
     this.focusNode,
     this.autofocus = false,
     this.canRequestFocus = true,
-    this.disabledFeedback = false,
+    this.feedbackDisabled = false,
     this.disabled = false,
     required this.style,
     this.child,
@@ -280,7 +292,7 @@ class _AnchorRender extends StatefulWidget {
   final FocusNode? focusNode;
   final bool autofocus;
   final bool canRequestFocus;
-  final bool disabledFeedback;
+  final bool feedbackDisabled;
   final bool disabled;
   final AnchorStyle style;
   final Widget? child;
@@ -336,7 +348,7 @@ class _AnchorRenderState extends State<_AnchorRender>
   void _onTap() {
     if (!childrenActive) {
       if (widget.onTap != null) {
-        if (!widget.disabledFeedback) {
+        if (!widget.feedbackDisabled) {
           Feedback.forTap(context, widget.platform);
         }
         widget.onTap?.call();
@@ -406,7 +418,7 @@ class _AnchorRenderState extends State<_AnchorRender>
 
   @override
   Widget build(BuildContext context) {
-    Widget result = _AnchorProvider(
+    Widget result = _AnchorRenderProvider(
       state: this,
       child: widget.child,
     );
@@ -473,8 +485,8 @@ class _AnchorRenderState extends State<_AnchorRender>
   }
 }
 
-class _AnchorProvider extends InheritedWidget {
-  const _AnchorProvider({
+class _AnchorRenderProvider extends InheritedWidget {
+  const _AnchorRenderProvider({
     required this.state,
     required Widget? child,
   }) : super(child: child ?? const _AnchorPlaceholder());
@@ -482,11 +494,13 @@ class _AnchorProvider extends InheritedWidget {
   final _AnchorRenderState state;
 
   @override
-  bool updateShouldNotify(_AnchorProvider oldWidget) =>
+  bool updateShouldNotify(_AnchorRenderProvider oldWidget) =>
       state != oldWidget.state;
 
   static _AnchorRenderState? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<_AnchorProvider>()?.state;
+    return context
+        .dependOnInheritedWidgetOfExactType<_AnchorRenderProvider>()
+        ?.state;
   }
 }
 
