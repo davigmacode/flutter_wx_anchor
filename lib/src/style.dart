@@ -58,7 +58,7 @@ class WxAnchorStyle with Diagnosticable {
   /// {@endtemplate}
   bool get overlayEnabled => overlayDisabled != true;
 
-  /// Default [WxAnchorStyle] constructor.
+  /// Create an anchor style.
   const WxAnchorStyle({
     this.margin,
     this.padding,
@@ -70,7 +70,18 @@ class WxAnchorStyle with Diagnosticable {
     this.overlayDisabled,
   });
 
-  /// Create an [WxAnchorStyle] from another style
+  /// Create an anchor style with circle shape.
+  const WxAnchorStyle.circle({
+    this.margin,
+    this.padding,
+    this.radius,
+    this.overlayColor,
+    this.overlayOpacity,
+    this.overlayDisabled,
+  })  : shape = BoxShape.circle,
+        borderRadius = null;
+
+  /// Create a [WxAnchorStyle] from another style
   WxAnchorStyle.from(WxAnchorStyle? other)
       : margin = other?.margin,
         padding = other?.padding,
@@ -118,7 +129,7 @@ class WxAnchorStyle with Diagnosticable {
     ].any((el) => el != null);
 
     if (hasDrivenStyle) {
-      return DrivenAnchorStyle.from(
+      return WxDrivenAnchorStyle.from(
         style,
         focusedStyle: focusedStyle,
         hoveredStyle: hoveredStyle,
@@ -148,7 +159,7 @@ class WxAnchorStyle with Diagnosticable {
       overlayDisabled: other.overlayDisabled,
     );
 
-    if (other is DrivenAnchorStyle) {
+    if (other is WxDrivenAnchorStyle) {
       style = style.copyWith(
         focusedStyle: other.focusedStyle,
         hoveredStyle: other.hoveredStyle,
@@ -206,7 +217,7 @@ class WxAnchorStyle with Diagnosticable {
 }
 
 /// Create a [WxAnchorStyle] that can handle widget event.
-class DrivenAnchorStyle extends WxAnchorStyle
+class WxDrivenAnchorStyle extends WxAnchorStyle
     implements DrivenProperty<WxAnchorStyle> {
   /// Whether the resolved style is merged to
   /// the previous resolved style or not
@@ -237,7 +248,7 @@ class DrivenAnchorStyle extends WxAnchorStyle
       };
 
   /// Default constructor for a driven [WxAnchorStyle].
-  const DrivenAnchorStyle({
+  const WxDrivenAnchorStyle({
     super.margin,
     super.padding,
     super.shape,
@@ -253,9 +264,9 @@ class DrivenAnchorStyle extends WxAnchorStyle
     this.mergeResolved,
   });
 
-  /// Create a [DrivenAnchorStyle] with value
+  /// Create a [WxDrivenAnchorStyle] with value
   /// from another [WxAnchorStyle].
-  DrivenAnchorStyle.from(
+  WxDrivenAnchorStyle.from(
     super.enabled, {
     this.focusedStyle,
     this.hoveredStyle,
@@ -264,8 +275,8 @@ class DrivenAnchorStyle extends WxAnchorStyle
     this.mergeResolved,
   }) : super.from();
 
-  /// Create a [DrivenAnchorStyle] from a resolver callback
-  DrivenAnchorStyle.resolver(
+  /// Create a [WxDrivenAnchorStyle] from a resolver callback
+  WxDrivenAnchorStyle.resolver(
     DrivenPropertyResolver<WxAnchorStyle?> resolver, {
     this.mergeResolved = false,
   })  : focusedStyle = resolver({WidgetEvent.focused}),
@@ -274,8 +285,8 @@ class DrivenAnchorStyle extends WxAnchorStyle
         disabledStyle = resolver({WidgetEvent.disabled}),
         super.from(resolver({}));
 
-  /// Create a rectangle shaped [DrivenAnchorStyle].
-  const DrivenAnchorStyle.rectangle({
+  /// Create a rectangle shaped [WxDrivenAnchorStyle].
+  const WxDrivenAnchorStyle.rectangle({
     super.margin,
     super.padding,
     super.borderRadius,
@@ -289,8 +300,8 @@ class DrivenAnchorStyle extends WxAnchorStyle
     this.mergeResolved,
   }) : super(shape: BoxShape.rectangle, radius: null);
 
-  /// Create a circle shaped [DrivenAnchorStyle].
-  const DrivenAnchorStyle.circle({
+  /// Create a circle shaped [WxDrivenAnchorStyle].
+  const WxDrivenAnchorStyle.circle({
     super.margin,
     super.padding,
     super.radius,
@@ -327,7 +338,7 @@ class DrivenAnchorStyle extends WxAnchorStyle
   /// Creates a copy of this [WxAnchorStyle] but with
   /// the given fields replaced with the new values.
   @override
-  DrivenAnchorStyle copyWith({
+  WxDrivenAnchorStyle copyWith({
     EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? padding,
     BoxShape? shape,
@@ -342,7 +353,7 @@ class DrivenAnchorStyle extends WxAnchorStyle
     WxAnchorStyle? pressedStyle,
     WxAnchorStyle? disabledStyle,
   }) {
-    return DrivenAnchorStyle(
+    return WxDrivenAnchorStyle(
       margin: margin ?? this.margin,
       padding: padding ?? this.padding,
       shape: shape ?? this.shape,

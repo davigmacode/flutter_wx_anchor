@@ -330,7 +330,7 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
   @protected
   void setStyle() {
     final raw = widget.style;
-    final resolved = DrivenAnchorStyle.evaluate(raw, widgetEvents.value);
+    final resolved = WxDrivenAnchorStyle.evaluate(raw, widgetEvents.value);
     style = style.merge(resolved);
   }
 

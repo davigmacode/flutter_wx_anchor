@@ -10,7 +10,7 @@ class WxAnchorThemeDefaults extends WxAnchorThemeData {
         ));
 
   @override
-  get style => const DrivenAnchorStyle(
+  get style => const WxDrivenAnchorStyle(
         shape: BoxShape.rectangle,
         overlayDisabled: false,
         overlayOpacity: 0,
