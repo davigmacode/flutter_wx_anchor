@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'style.dart';
 import 'theme_data.dart';
 
-/// A Widget that controls how descendant [Anchor]s should look like.
-class AnchorTheme extends InheritedTheme {
-  /// The properties for descendant [Anchor]s
-  final AnchorThemeData data;
+/// A Widget that controls how descendant [WxAnchor]s should look like.
+class WxAnchorTheme extends InheritedTheme {
+  /// The properties for descendant [WxAnchor]s
+  final WxAnchorThemeData data;
 
   /// Creates a theme that controls
-  /// how descendant [Anchor]s should look like.
-  const AnchorTheme({
+  /// how descendant [WxAnchor]s should look like.
+  const WxAnchorTheme({
     super.key,
     required this.data,
     required super.child,
   });
 
-  /// Creates an [AnchorTheme] that controls the style of
-  /// descendant widgets, and merges in the current [AnchorTheme], if any.
+  /// Creates an [WxAnchorTheme] that controls the style of
+  /// descendant widgets, and merges in the current [WxAnchorTheme], if any.
   ///
   /// The [child] arguments must not be null.
   static Widget merge({
@@ -25,14 +25,14 @@ class AnchorTheme extends InheritedTheme {
     Curve? curve,
     Duration? duration,
     TargetPlatform? platform,
-    AnchorStyle? style,
-    AnchorThemeData? data,
+    WxAnchorStyle? style,
+    WxAnchorThemeData? data,
     required Widget child,
   }) {
     return Builder(
       builder: (BuildContext context) {
-        final parent = AnchorTheme.of(context);
-        return AnchorTheme(
+        final parent = WxAnchorTheme.of(context);
+        return WxAnchorTheme(
           key: key,
           data: parent.merge(data).copyWith(
                 curve: curve,
@@ -46,7 +46,7 @@ class AnchorTheme extends InheritedTheme {
     );
   }
 
-  /// The [AnchorTheme] from the closest instance of
+  /// The [WxAnchorTheme] from the closest instance of
   /// this class that encloses the given context.
   ///
   /// Typical usage is as follows:
@@ -54,29 +54,29 @@ class AnchorTheme extends InheritedTheme {
   /// ```dart
   /// AnchorThemeData theme = AnchorTheme.of(context);
   /// ```
-  static AnchorThemeData of(BuildContext context) {
+  static WxAnchorThemeData of(BuildContext context) {
     final parentTheme =
-        context.dependOnInheritedWidgetOfExactType<AnchorTheme>();
+        context.dependOnInheritedWidgetOfExactType<WxAnchorTheme>();
     if (parentTheme != null) return parentTheme.data;
 
-    final globalTheme = Theme.of(context).extension<AnchorThemeData>();
-    final defaultTheme = AnchorThemeData.defaults(context);
+    final globalTheme = Theme.of(context).extension<WxAnchorThemeData>();
+    final defaultTheme = WxAnchorThemeData.defaults(context);
     return defaultTheme.merge(globalTheme);
   }
 
   @override
   Widget wrap(BuildContext context, Widget child) {
-    return AnchorTheme(data: data, child: child);
+    return WxAnchorTheme(data: data, child: child);
   }
 
   @override
-  bool updateShouldNotify(AnchorTheme oldWidget) {
+  bool updateShouldNotify(WxAnchorTheme oldWidget) {
     return oldWidget.data != data;
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<AnchorThemeData>('data', data));
+    properties.add(DiagnosticsProperty<WxAnchorThemeData>('data', data));
   }
 }

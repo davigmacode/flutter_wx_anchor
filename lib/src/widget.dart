@@ -11,9 +11,9 @@ import 'feedback.dart';
 /// An area that responds to touch.
 /// Has a configurable shape and can be configured
 /// to clip overlay that extend outside its bounds or not.
-class Anchor extends StatelessWidget {
+class WxAnchor extends StatelessWidget {
   /// Creates an area that responds to touch.
-  const Anchor({
+  const WxAnchor({
     super.key,
     this.curve,
     this.duration,
@@ -45,7 +45,7 @@ class Anchor extends StatelessWidget {
   });
 
   /// Creates a circle shaped area that responds to touch.
-  const Anchor.circle({
+  const WxAnchor.circle({
     super.key,
     this.curve,
     this.duration,
@@ -134,8 +134,8 @@ class Anchor extends StatelessWidget {
   /// {@macro widgetarian.anchor.style.margin}
   final EdgeInsetsGeometry? margin;
 
-  /// The [AnchorStyle] to apply
-  final AnchorStyle? style;
+  /// The [WxAnchorStyle] to apply
+  final WxAnchorStyle? style;
 
   /// Used by widgets that expose their internal event
   /// for the sake of extensions that add support for additional events.
@@ -166,8 +166,8 @@ class Anchor extends StatelessWidget {
   /// The widget below this widget in the tree.
   final Widget? child;
 
-  AnchorStyle get effectiveStyle {
-    return const AnchorStyle().merge(style).copyWith(
+  WxAnchorStyle get effectiveStyle {
+    return const WxAnchorStyle().merge(style).copyWith(
           margin: margin,
           padding: padding,
           shape: shape,
@@ -181,10 +181,10 @@ class Anchor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final anchorTheme = AnchorTheme.of(context);
+    final anchorTheme = WxAnchorTheme.of(context);
     final themedStyle = anchorTheme.style.merge(effectiveStyle);
-    final parentState = _AnchorRenderProvider.of(context);
-    return _AnchorRender(
+    final parentState = _WxAnchorRenderProvider.of(context);
+    return _WxAnchorRender(
       parentState: parentState,
       curve: curve ?? anchorTheme.curve,
       duration: duration ?? anchorTheme.duration,
@@ -244,14 +244,14 @@ class Anchor extends StatelessWidget {
         .add(DiagnosticsProperty<bool>('overlayDisabled', overlayDisabled));
     properties
         .add(DiagnosticsProperty<MouseCursor?>('mouseCursor', mouseCursor));
-    properties.add(DiagnosticsProperty<AnchorStyle?>('style', style));
+    properties.add(DiagnosticsProperty<WxAnchorStyle?>('style', style));
     properties.add(
-        DiagnosticsProperty<AnchorStyle>('effectiveStyle', effectiveStyle));
+        DiagnosticsProperty<WxAnchorStyle>('effectiveStyle', effectiveStyle));
   }
 }
 
-class _AnchorRender extends StatefulWidget {
-  const _AnchorRender({
+class _WxAnchorRender extends StatefulWidget {
+  const _WxAnchorRender({
     this.parentState,
     required this.curve,
     required this.duration,
@@ -275,7 +275,7 @@ class _AnchorRender extends StatefulWidget {
     this.child,
   });
 
-  final _AnchorRenderState? parentState;
+  final _WxAnchorRenderState? parentState;
   final Curve curve;
   final Duration duration;
   final TargetPlatform platform;
@@ -294,7 +294,7 @@ class _AnchorRender extends StatefulWidget {
   final bool canRequestFocus;
   final bool feedbackDisabled;
   final bool disabled;
-  final AnchorStyle style;
+  final WxAnchorStyle style;
   final Widget? child;
 
   bool get enabled => !disabled;
@@ -312,7 +312,7 @@ class _AnchorRender extends StatefulWidget {
       clickable ? DrivenMouseCursor.clickable : MouseCursor.defer;
 
   @override
-  State<_AnchorRender> createState() => _AnchorRenderState();
+  State<_WxAnchorRender> createState() => _WxAnchorRenderState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -321,11 +321,11 @@ class _AnchorRender extends StatefulWidget {
   }
 }
 
-class _AnchorRenderState extends State<_AnchorRender>
-    with WidgetEventMixin<_AnchorRender> {
+class _WxAnchorRenderState extends State<_WxAnchorRender>
+    with WidgetEventMixin<_WxAnchorRender> {
   bool childrenActive = false;
 
-  AnchorStyle style = const AnchorStyle();
+  WxAnchorStyle style = const WxAnchorStyle();
 
   @protected
   void setStyle() {
@@ -400,7 +400,7 @@ class _AnchorRenderState extends State<_AnchorRender>
   }
 
   @override
-  void didUpdateWidget(_AnchorRender oldWidget) {
+  void didUpdateWidget(_WxAnchorRender oldWidget) {
     if (mounted) {
       updateWidgetEvents(oldWidget.eventsController, widget.eventsController);
       widgetEvents.toggle(WidgetEvent.disabled, widget.disabled);
@@ -418,7 +418,7 @@ class _AnchorRenderState extends State<_AnchorRender>
 
   @override
   Widget build(BuildContext context) {
-    Widget result = _AnchorRenderProvider(
+    Widget result = _WxAnchorRenderProvider(
       state: this,
       child: widget.child,
     );
@@ -485,27 +485,27 @@ class _AnchorRenderState extends State<_AnchorRender>
   }
 }
 
-class _AnchorRenderProvider extends InheritedWidget {
-  const _AnchorRenderProvider({
+class _WxAnchorRenderProvider extends InheritedWidget {
+  const _WxAnchorRenderProvider({
     required this.state,
     required Widget? child,
-  }) : super(child: child ?? const _AnchorPlaceholder());
+  }) : super(child: child ?? const _WxAnchorPlaceholder());
 
-  final _AnchorRenderState state;
+  final _WxAnchorRenderState state;
 
   @override
-  bool updateShouldNotify(_AnchorRenderProvider oldWidget) =>
+  bool updateShouldNotify(_WxAnchorRenderProvider oldWidget) =>
       state != oldWidget.state;
 
-  static _AnchorRenderState? of(BuildContext context) {
+  static _WxAnchorRenderState? of(BuildContext context) {
     return context
-        .dependOnInheritedWidgetOfExactType<_AnchorRenderProvider>()
+        .dependOnInheritedWidgetOfExactType<_WxAnchorRenderProvider>()
         ?.state;
   }
 }
 
-class _AnchorPlaceholder extends StatelessWidget {
-  const _AnchorPlaceholder();
+class _WxAnchorPlaceholder extends StatelessWidget {
+  const _WxAnchorPlaceholder();
 
   @override
   Widget build(BuildContext context) {

@@ -3,9 +3,9 @@ import 'style.dart';
 import 'theme_data.dart';
 
 @immutable
-class AnchorThemeDefaults extends AnchorThemeData {
-  AnchorThemeDefaults(BuildContext context)
-      : super.from(AnchorThemeData.fallback.copyWith(
+class WxAnchorThemeDefaults extends WxAnchorThemeData {
+  WxAnchorThemeDefaults(BuildContext context)
+      : super.from(WxAnchorThemeData.fallback.copyWith(
           platform: Theme.of(context).platform,
         ));
 
@@ -14,8 +14,8 @@ class AnchorThemeDefaults extends AnchorThemeData {
         shape: BoxShape.rectangle,
         overlayDisabled: false,
         overlayOpacity: 0,
-        focusedStyle: AnchorStyle(overlayOpacity: 0.15),
-        hoveredStyle: AnchorStyle(overlayOpacity: 0.05),
-        pressedStyle: AnchorStyle(overlayOpacity: 0.1),
+        focusedStyle: WxAnchorStyle(overlayOpacity: 0.15),
+        hoveredStyle: WxAnchorStyle(overlayOpacity: 0.05),
+        pressedStyle: WxAnchorStyle(overlayOpacity: 0.1),
       ).merge(super.style);
 }

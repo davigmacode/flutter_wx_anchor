@@ -6,7 +6,7 @@ import 'event.dart';
 
 /// The style to be applied to anchor widget
 @immutable
-class AnchorStyle with Diagnosticable {
+class WxAnchorStyle with Diagnosticable {
   /// {@template widgetarian.anchor.style.margin}
   /// Empty space to surround the outside anchor.
   /// {@endtemplate}
@@ -15,7 +15,7 @@ class AnchorStyle with Diagnosticable {
   /// {@template widgetarian.anchor.style.padding}
   /// The padding between the contents of the anchor and the outside anchor.
   ///
-  /// defaults to [AnchorStyle.defaultPadding].
+  /// defaults to [WxAnchorStyle.defaultPadding].
   /// {@endtemplate}
   final EdgeInsetsGeometry? padding;
 
@@ -58,8 +58,8 @@ class AnchorStyle with Diagnosticable {
   /// {@endtemplate}
   bool get overlayEnabled => overlayDisabled != true;
 
-  /// Default [AnchorStyle] constructor.
-  const AnchorStyle({
+  /// Default [WxAnchorStyle] constructor.
+  const WxAnchorStyle({
     this.margin,
     this.padding,
     this.shape,
@@ -70,8 +70,8 @@ class AnchorStyle with Diagnosticable {
     this.overlayDisabled,
   });
 
-  /// Create an [AnchorStyle] from another style
-  AnchorStyle.from(AnchorStyle? other)
+  /// Create an [WxAnchorStyle] from another style
+  WxAnchorStyle.from(WxAnchorStyle? other)
       : margin = other?.margin,
         padding = other?.padding,
         shape = other?.shape,
@@ -81,9 +81,9 @@ class AnchorStyle with Diagnosticable {
         overlayOpacity = other?.overlayOpacity,
         overlayDisabled = other?.overlayDisabled;
 
-  /// Creates a copy of this [AnchorStyle] but with
+  /// Creates a copy of this [WxAnchorStyle] but with
   /// the given fields replaced with the new values.
-  AnchorStyle copyWith({
+  WxAnchorStyle copyWith({
     EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? padding,
     BoxShape? shape,
@@ -93,12 +93,12 @@ class AnchorStyle with Diagnosticable {
     double? overlayOpacity,
     bool? overlayDisabled,
     bool? mergeResolved,
-    AnchorStyle? focusedStyle,
-    AnchorStyle? hoveredStyle,
-    AnchorStyle? pressedStyle,
-    AnchorStyle? disabledStyle,
+    WxAnchorStyle? focusedStyle,
+    WxAnchorStyle? hoveredStyle,
+    WxAnchorStyle? pressedStyle,
+    WxAnchorStyle? disabledStyle,
   }) {
-    final style = AnchorStyle(
+    final style = WxAnchorStyle(
       margin: margin ?? this.margin,
       padding: padding ?? this.padding,
       shape: shape ?? this.shape,
@@ -131,9 +131,9 @@ class AnchorStyle with Diagnosticable {
     return style;
   }
 
-  /// Creates a copy of this [AnchorStyle] but with
+  /// Creates a copy of this [WxAnchorStyle] but with
   /// the given fields replaced with the new values.
-  AnchorStyle merge(AnchorStyle? other) {
+  WxAnchorStyle merge(WxAnchorStyle? other) {
     // if null return current object
     if (other == null) return this;
 
@@ -161,10 +161,10 @@ class AnchorStyle with Diagnosticable {
     return style;
   }
 
-  /// Linearly interpolate between two [AnchorStyle] objects.
-  static AnchorStyle? lerp(AnchorStyle? a, AnchorStyle? b, double t) {
+  /// Linearly interpolate between two [WxAnchorStyle] objects.
+  static WxAnchorStyle? lerp(WxAnchorStyle? a, WxAnchorStyle? b, double t) {
     if (a == null && b == null) return null;
-    return AnchorStyle(
+    return WxAnchorStyle(
       margin: EdgeInsetsGeometry.lerp(a?.margin, b?.margin, t),
       padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
       shape: lerpEnum(a?.shape, b?.shape, t),
@@ -190,7 +190,7 @@ class AnchorStyle with Diagnosticable {
   @override
   bool operator ==(Object other) {
     if (other.runtimeType != runtimeType) return false;
-    return other is AnchorStyle && mapEquals(other.toMap(), toMap());
+    return other is WxAnchorStyle && mapEquals(other.toMap(), toMap());
   }
 
   @override
@@ -205,38 +205,38 @@ class AnchorStyle with Diagnosticable {
   }
 }
 
-/// Create a [AnchorStyle] that can handle widget event.
-class DrivenAnchorStyle extends AnchorStyle
-    implements DrivenProperty<AnchorStyle> {
+/// Create a [WxAnchorStyle] that can handle widget event.
+class DrivenAnchorStyle extends WxAnchorStyle
+    implements DrivenProperty<WxAnchorStyle> {
   /// Whether the resolved style is merged to
   /// the previous resolved style or not
   final bool? mergeResolved;
 
   /// The style to be resolved when
   /// events includes [WxAnchorEvent.focused].
-  final AnchorStyle? focusedStyle;
+  final WxAnchorStyle? focusedStyle;
 
   /// The style to be resolved when
   /// events includes [WxAnchorEvent.hovered].
-  final AnchorStyle? hoveredStyle;
+  final WxAnchorStyle? hoveredStyle;
 
   /// The style to be resolved when
   /// events includes [WxAnchorEvent.pressed].
-  final AnchorStyle? pressedStyle;
+  final WxAnchorStyle? pressedStyle;
 
   /// The style to be resolved when
   /// events includes [WxAnchorEvent.disabled].
-  final AnchorStyle? disabledStyle;
+  final WxAnchorStyle? disabledStyle;
 
   /// Map of driven style, order matters
-  Map<WidgetEvent, AnchorStyle?> get driven => {
+  Map<WidgetEvent, WxAnchorStyle?> get driven => {
         WidgetEvent.focused: focusedStyle,
         WidgetEvent.hovered: hoveredStyle,
         WidgetEvent.pressed: pressedStyle,
         WidgetEvent.disabled: disabledStyle,
       };
 
-  /// Default constructor for a driven [AnchorStyle].
+  /// Default constructor for a driven [WxAnchorStyle].
   const DrivenAnchorStyle({
     super.margin,
     super.padding,
@@ -254,7 +254,7 @@ class DrivenAnchorStyle extends AnchorStyle
   });
 
   /// Create a [DrivenAnchorStyle] with value
-  /// from another [AnchorStyle].
+  /// from another [WxAnchorStyle].
   DrivenAnchorStyle.from(
     super.enabled, {
     this.focusedStyle,
@@ -266,7 +266,7 @@ class DrivenAnchorStyle extends AnchorStyle
 
   /// Create a [DrivenAnchorStyle] from a resolver callback
   DrivenAnchorStyle.resolver(
-    DrivenPropertyResolver<AnchorStyle?> resolver, {
+    DrivenPropertyResolver<WxAnchorStyle?> resolver, {
     this.mergeResolved = false,
   })  : focusedStyle = resolver({WidgetEvent.focused}),
         hoveredStyle = resolver({WidgetEvent.hovered}),
@@ -305,15 +305,16 @@ class DrivenAnchorStyle extends AnchorStyle
   }) : super(shape: BoxShape.circle, borderRadius: null);
 
   /// Resolves the value for the given set of events
-  /// if `value` is an event driven [AnchorStyle],
+  /// if `value` is an event driven [WxAnchorStyle],
   /// otherwise returns the value itself.
-  static AnchorStyle? evaluate(AnchorStyle? value, Set<WidgetEvent> events) {
-    return DrivenProperty.evaluate<AnchorStyle?>(value, events);
+  static WxAnchorStyle? evaluate(
+      WxAnchorStyle? value, Set<WidgetEvent> events) {
+    return DrivenProperty.evaluate<WxAnchorStyle?>(value, events);
   }
 
   @override
-  AnchorStyle resolve(Set<WidgetEvent> events) {
-    AnchorStyle style = this;
+  WxAnchorStyle resolve(Set<WidgetEvent> events) {
+    WxAnchorStyle style = this;
     for (var e in driven.entries) {
       if (events.contains(e.key)) {
         final evaluated = evaluate(e.value, events);
@@ -323,7 +324,7 @@ class DrivenAnchorStyle extends AnchorStyle
     return style;
   }
 
-  /// Creates a copy of this [AnchorStyle] but with
+  /// Creates a copy of this [WxAnchorStyle] but with
   /// the given fields replaced with the new values.
   @override
   DrivenAnchorStyle copyWith({
@@ -336,10 +337,10 @@ class DrivenAnchorStyle extends AnchorStyle
     double? overlayOpacity,
     bool? overlayDisabled,
     bool? mergeResolved,
-    AnchorStyle? focusedStyle,
-    AnchorStyle? hoveredStyle,
-    AnchorStyle? pressedStyle,
-    AnchorStyle? disabledStyle,
+    WxAnchorStyle? focusedStyle,
+    WxAnchorStyle? hoveredStyle,
+    WxAnchorStyle? pressedStyle,
+    WxAnchorStyle? disabledStyle,
   }) {
     return DrivenAnchorStyle(
       margin: margin ?? this.margin,
