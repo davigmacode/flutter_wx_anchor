@@ -59,7 +59,7 @@ class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
   /// An [WxAnchorThemeData] with some reasonable default values.
   static final fallback = WxAnchorThemeData(
     curve: Curves.linear,
-    duration: const Duration(milliseconds: 200),
+    duration: const Duration(milliseconds: 150),
     platform: defaultTargetPlatform,
     style: const WxAnchorStyle(),
   );
