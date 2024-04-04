@@ -1,3 +1,8 @@
+## 1.0.1
+
+* Adjust sdk constraints
+* Update dependencies
+
 ## 1.0.0
 
 * Added anchor widget.

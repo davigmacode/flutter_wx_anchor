@@ -95,10 +95,10 @@ packages:
     dependency: transitive
     description:
       name: lerp
-      sha256: "1ba403fcda97d6a06f4a4df9b5af0b342364dde6032162b48f9db0f075acb78b"
+      sha256: c2a41d7b152d7014cf5ba6534203bfe66382877e426ab7860ddd9b741ec49c91
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.1"
+    version: "0.0.2"
   lints:
     dependency: transitive
     description:
@@ -212,17 +212,17 @@ packages:
     dependency: transitive
     description:
       name: widget_event
-      sha256: "14013fbdc15370ba0244a14cd0c24d11a5a0418062bcf06fb99dc69a20885e1a"
+      sha256: "5ff06c59ab77a6ec3e4d7656f8ce23c31111b16df0d96ab5de350f870cc0804f"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.8"
+    version: "1.2.9"
   wx_anchor:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.0.1"
+    version: "1.0.1"
   wx_text:
     dependency: "direct main"
     description:
@@ -235,10 +235,10 @@ packages:
     dependency: transitive
     description:
       name: wx_utils
-      sha256: "6ea9432692803e388153f750cb88d472371a643a1048407ac737c8f7ee95570c"
+      sha256: be01115e1a86a237ef2878e78fe1bfd8063fa1483abf970b1547e780d38051a5
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3"
+    version: "0.0.4"
 sdks:
   dart: ">=3.3.1 <4.0.0"
-  flutter: ">=1.17.0"
+  flutter: ">=2.0.0"
