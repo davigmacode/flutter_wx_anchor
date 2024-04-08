@@ -30,8 +30,6 @@ class WxAnchor extends StatelessWidget {
     this.overlayOpacity,
     this.mouseCursor,
     this.borderRadius,
-    this.radius,
-    this.shape,
     this.padding,
     this.margin,
     this.style,
@@ -42,7 +40,8 @@ class WxAnchor extends StatelessWidget {
     this.feedbackDisabled = false,
     this.disabled = false,
     this.child,
-  });
+  })  : shape = null,
+        radius = null;
 
   /// Creates a circle shaped area that responds to touch.
   const WxAnchor.circle({
