@@ -135,7 +135,7 @@ class RenderOverlay extends RenderProxyBox {
   })  : _color = color ?? const Color(0xFF000000),
         _opacity = opacity ?? 0.0,
         _shape = shape ?? BoxShape.circle,
-        _radius = radius ?? 0.0,
+        _radius = radius,
         _borderRadius = borderRadius ?? BorderRadius.zero;
 
   @override
@@ -168,8 +168,8 @@ class RenderOverlay extends RenderProxyBox {
     markNeedsPaint();
   }
 
-  double get radius => _radius;
-  double _radius;
+  double get radius => _radius ?? size.shortestSide;
+  double? _radius;
   set radius(double? value) {
     if (value == null) return;
     if (_radius == value) return;
