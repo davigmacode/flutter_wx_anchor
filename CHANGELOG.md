@@ -1,7 +1,14 @@
+## 1.1.0
+
+* Removed `shape` and `radius` from default constructor.
+* Renamed `mergeResolved` with `inherited` in driven style.
+* Added constructor to creating rectangle style.
+* Default Radius use shortest rect size now.
+
 ## 1.0.1
 
-* Adjust sdk constraints
-* Update dependencies
+* Adjust sdk constraints.
+* Update dependencies.
 
 ## 1.0.0
 
