@@ -51,11 +51,10 @@ class MyHomePage extends StatelessWidget {
             Wrapper(
               title: 'Circle Shape',
               child: Wrap(
-                spacing: 20,
+                spacing: 30,
                 children: [
                   WxAnchor.circle(
                     onTap: () {},
-                    radius: 20,
                     child: const Icon(Icons.chat),
                   ),
                   WxAnchor(
