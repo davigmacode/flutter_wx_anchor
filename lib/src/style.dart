@@ -70,6 +70,17 @@ class WxAnchorStyle with Diagnosticable {
     this.overlayDisabled,
   });
 
+  /// Create an anchor style with rectangle shape.
+  const WxAnchorStyle.rectangle({
+    this.margin,
+    this.padding,
+    this.borderRadius,
+    this.overlayColor,
+    this.overlayOpacity,
+    this.overlayDisabled,
+  })  : shape = BoxShape.rectangle,
+        radius = null;
+
   /// Create an anchor style with circle shape.
   const WxAnchorStyle.circle({
     this.margin,
@@ -103,7 +114,7 @@ class WxAnchorStyle with Diagnosticable {
     Color? overlayColor,
     double? overlayOpacity,
     bool? overlayDisabled,
-    bool? mergeResolved,
+    bool? inherited,
     WxAnchorStyle? focusedStyle,
     WxAnchorStyle? hoveredStyle,
     WxAnchorStyle? pressedStyle,
@@ -121,7 +132,7 @@ class WxAnchorStyle with Diagnosticable {
     );
 
     final hasDrivenStyle = [
-      mergeResolved,
+      inherited,
       focusedStyle,
       hoveredStyle,
       pressedStyle,
@@ -135,7 +146,7 @@ class WxAnchorStyle with Diagnosticable {
         hoveredStyle: hoveredStyle,
         pressedStyle: pressedStyle,
         disabledStyle: disabledStyle,
-        mergeResolved: mergeResolved,
+        inherited: inherited,
       );
     }
 
@@ -165,7 +176,7 @@ class WxAnchorStyle with Diagnosticable {
         hoveredStyle: other.hoveredStyle,
         pressedStyle: other.pressedStyle,
         disabledStyle: other.disabledStyle,
-        mergeResolved: other.mergeResolved,
+        inherited: other.inherited,
       );
     }
 
@@ -221,7 +232,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     implements DrivenProperty<WxAnchorStyle> {
   /// Whether the resolved style is merged to
   /// the previous resolved style or not
-  final bool? mergeResolved;
+  final bool? inherited;
 
   /// The style to be resolved when
   /// events includes [WxAnchorEvent.focused].
@@ -261,7 +272,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     this.hoveredStyle,
     this.pressedStyle,
     this.disabledStyle,
-    this.mergeResolved,
+    this.inherited,
   });
 
   /// Create a [WxDrivenAnchorStyle] with value
@@ -272,13 +283,13 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     this.hoveredStyle,
     this.pressedStyle,
     this.disabledStyle,
-    this.mergeResolved,
+    this.inherited,
   }) : super.from();
 
   /// Create a [WxDrivenAnchorStyle] from a resolver callback
   WxDrivenAnchorStyle.resolver(
     DrivenPropertyResolver<WxAnchorStyle?> resolver, {
-    this.mergeResolved = false,
+    this.inherited = false,
   })  : focusedStyle = resolver({WidgetEvent.focused}),
         hoveredStyle = resolver({WidgetEvent.hovered}),
         pressedStyle = resolver({WidgetEvent.pressed}),
@@ -297,8 +308,8 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     this.hoveredStyle,
     this.pressedStyle,
     this.disabledStyle,
-    this.mergeResolved,
-  }) : super(shape: BoxShape.rectangle, radius: null);
+    this.inherited,
+  }) : super.rectangle();
 
   /// Create a circle shaped [WxDrivenAnchorStyle].
   const WxDrivenAnchorStyle.circle({
@@ -312,8 +323,8 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     this.hoveredStyle,
     this.pressedStyle,
     this.disabledStyle,
-    this.mergeResolved,
-  }) : super(shape: BoxShape.circle, borderRadius: null);
+    this.inherited,
+  }) : super.circle();
 
   /// Resolves the value for the given set of events
   /// if `value` is an event driven [WxAnchorStyle],
@@ -347,22 +358,24 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     Color? overlayColor,
     double? overlayOpacity,
     bool? overlayDisabled,
-    bool? mergeResolved,
+    bool? inherited,
     WxAnchorStyle? focusedStyle,
     WxAnchorStyle? hoveredStyle,
     WxAnchorStyle? pressedStyle,
     WxAnchorStyle? disabledStyle,
   }) {
-    return WxDrivenAnchorStyle(
-      margin: margin ?? this.margin,
-      padding: padding ?? this.padding,
-      shape: shape ?? this.shape,
-      radius: radius ?? this.radius,
-      borderRadius: borderRadius ?? this.borderRadius,
-      overlayColor: overlayColor ?? this.overlayColor,
-      overlayOpacity: overlayOpacity ?? this.overlayOpacity,
-      overlayDisabled: overlayDisabled ?? this.overlayDisabled,
-      mergeResolved: mergeResolved ?? this.mergeResolved,
+    return WxDrivenAnchorStyle.from(
+      super.copyWith(
+        margin: margin,
+        padding: padding,
+        shape: shape,
+        radius: radius,
+        borderRadius: borderRadius,
+        overlayColor: overlayColor,
+        overlayOpacity: overlayOpacity,
+        overlayDisabled: overlayDisabled,
+      ),
+      inherited: inherited ?? this.inherited,
       focusedStyle: this.focusedStyle?.merge(focusedStyle) ?? focusedStyle,
       hoveredStyle: this.hoveredStyle?.merge(hoveredStyle) ?? hoveredStyle,
       pressedStyle: this.pressedStyle?.merge(pressedStyle) ?? pressedStyle,
@@ -373,7 +386,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('mergeResolved', mergeResolved));
+    properties.add(DiagnosticsProperty('inherited', inherited));
     properties.add(DiagnosticsProperty('focusedStyle', focusedStyle));
     properties.add(DiagnosticsProperty('hoveredStyle', hoveredStyle));
     properties.add(DiagnosticsProperty('pressedStyle', pressedStyle));
