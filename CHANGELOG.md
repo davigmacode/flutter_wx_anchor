@@ -1,3 +1,8 @@
+## 1.1.1
+
+* Updated to `widget_event` v1.3.2
+* Fixed on tap up/cancel behavior
+
 ## 1.1.0
 
 * Removed `shape` and `radius` from default constructor.
