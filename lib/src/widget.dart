@@ -324,6 +324,8 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
     with WidgetEventMixin<_WxAnchorRender> {
   bool childrenActive = false;
 
+  PointerDeviceKind? pointerDeviceKind;
+
   WxAnchorStyle style = const WxAnchorStyle();
 
   @protected
@@ -355,28 +357,33 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
     }
   }
 
-  void _onTapCancel() {
-    if (!childrenActive) {
-      widgetEvents.toggle(WidgetEvent.pressed, false);
-      widget.onTapCancel?.call();
+  void _onTapCancel() async {
+    if (pointerDeviceKind == PointerDeviceKind.touch) {
+      await Future.delayed(widget.duration);
     }
+    pointerDeviceKind = null;
+    widgetEvents.toggle(WidgetEvent.pressed, false);
     widget.parentState?.childrenActive = false;
-  }
-
-  void _onTapDown(TapDownDetails details) {
-    if (!childrenActive) {
-      widgetEvents.toggle(WidgetEvent.pressed, true);
-      widget.onTapDown?.call(details);
-    }
-    widget.parentState?.childrenActive = true;
+    widget.onTapCancel?.call();
   }
 
   void _onTapUp(TapUpDetails details) async {
     if (details.kind == PointerDeviceKind.touch) {
       await Future.delayed(widget.duration);
     }
+    pointerDeviceKind = null;
     widgetEvents.toggle(WidgetEvent.pressed, false);
+    widget.parentState?.childrenActive = false;
     widget.onTapUp?.call(details);
+  }
+
+  void _onTapDown(TapDownDetails details) {
+    if (!childrenActive) {
+      pointerDeviceKind = details.kind;
+      widgetEvents.toggle(WidgetEvent.pressed, true);
+      widget.parentState?.childrenActive = true;
+      widget.onTapDown?.call(details);
+    }
   }
 
   void _onHover(bool value) {
