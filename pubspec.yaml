@@ -1,6 +1,6 @@
 name: wx_anchor
 description: Clickable zone within a widget that activates an interactive overlay upon touch or hover.
-version: 1.1.1
+version: 1.1.2
 homepage: https://github.com/davigmacode/flutter_wx_anchor
 
 topics:
@@ -19,7 +19,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  widget_event: ^1.3.2
+  widget_event: ^1.3.3
   wx_utils: ^0.0.4
 
 dev_dependencies:

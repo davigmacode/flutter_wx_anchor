@@ -1,3 +1,7 @@
+## 1.1.2
+
+* Updated to `widget_event` v1.3.3
+
 ## 1.1.1
 
 * Updated to `widget_event` v1.3.2
