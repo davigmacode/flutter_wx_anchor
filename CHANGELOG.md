@@ -1,3 +1,9 @@
+## 1.2.0
+
+* Renamed inherited to inherits
+* Added shortcut option to event driven style
+* Added loading indicator and wasm build for example web page
+
 ## 1.1.2
 
 * Updated to `widget_event` v1.3.3

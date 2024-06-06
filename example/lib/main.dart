@@ -33,7 +33,19 @@ class MyHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 40),
-            const WxText.displayMedium('WxAnchor'),
+            const WxText.displayMedium(
+              'WxAnchor',
+              gradient: LinearGradient(
+                colors: [
+                  Colors.green,
+                  Colors.blue,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              fontWeight: FontWeight.bold,
+              letterSpacing: -2,
+            ),
             const SizedBox(height: 40),
             Wrapper(
               title: 'Rectangle Shape',
