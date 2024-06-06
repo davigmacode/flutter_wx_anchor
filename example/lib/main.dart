@@ -57,13 +57,11 @@ class MyHomePage extends StatelessWidget {
                     onTap: () {},
                     child: const Icon(Icons.chat),
                   ),
-                  WxAnchor(
+                  WxAnchor.circle(
                     onTap: () {},
-                    style: const WxDrivenAnchorStyle.circle(
-                      radius: 0,
-                      hoveredStyle: WxAnchorStyle(radius: 25),
-                      pressedStyle: WxAnchorStyle(radius: 20),
-                    ),
+                    radius: 0,
+                    hoveredStyle: const WxAnchorStyle(radius: 25),
+                    pressedStyle: const WxAnchorStyle(radius: 20),
                     child: const Icon(Icons.power_off),
                   ),
                 ],

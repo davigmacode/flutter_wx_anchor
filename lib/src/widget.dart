@@ -33,6 +33,10 @@ class WxAnchor extends StatelessWidget {
     this.padding,
     this.margin,
     this.style,
+    this.focusedStyle,
+    this.hoveredStyle,
+    this.pressedStyle,
+    this.disabledStyle,
     this.eventsController,
     this.focusNode,
     this.autofocus = false,
@@ -64,6 +68,10 @@ class WxAnchor extends StatelessWidget {
     this.padding,
     this.margin,
     this.style,
+    this.focusedStyle,
+    this.hoveredStyle,
+    this.pressedStyle,
+    this.disabledStyle,
     this.eventsController,
     this.focusNode,
     this.autofocus = false,
@@ -136,6 +144,22 @@ class WxAnchor extends StatelessWidget {
   /// The [WxAnchorStyle] to apply
   final WxAnchorStyle? style;
 
+  /// The style to be resolved when
+  /// events includes [WxAnchorEvent.focused].
+  final WxAnchorStyle? focusedStyle;
+
+  /// The style to be resolved when
+  /// events includes [WxAnchorEvent.hovered].
+  final WxAnchorStyle? hoveredStyle;
+
+  /// The style to be resolved when
+  /// events includes [WxAnchorEvent.pressed].
+  final WxAnchorStyle? pressedStyle;
+
+  /// The style to be resolved when
+  /// events includes [WxAnchorEvent.disabled].
+  final WxAnchorStyle? disabledStyle;
+
   /// Used by widgets that expose their internal event
   /// for the sake of extensions that add support for additional events.
   final WidgetEventController? eventsController;
@@ -175,6 +199,10 @@ class WxAnchor extends StatelessWidget {
           overlayColor: overlayColor,
           overlayOpacity: overlayOpacity,
           overlayDisabled: overlayDisabled,
+          focusedStyle: focusedStyle,
+          hoveredStyle: hoveredStyle,
+          pressedStyle: pressedStyle,
+          disabledStyle: disabledStyle,
         );
   }
 
