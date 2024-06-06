@@ -114,7 +114,7 @@ class WxAnchorStyle with Diagnosticable {
     Color? overlayColor,
     double? overlayOpacity,
     bool? overlayDisabled,
-    bool? inherited,
+    bool? inherits,
     WxAnchorStyle? focusedStyle,
     WxAnchorStyle? hoveredStyle,
     WxAnchorStyle? pressedStyle,
@@ -132,7 +132,7 @@ class WxAnchorStyle with Diagnosticable {
     );
 
     final hasDrivenStyle = [
-      inherited,
+      inherits,
       focusedStyle,
       hoveredStyle,
       pressedStyle,
@@ -146,7 +146,7 @@ class WxAnchorStyle with Diagnosticable {
         hoveredStyle: hoveredStyle,
         pressedStyle: pressedStyle,
         disabledStyle: disabledStyle,
-        inherited: inherited,
+        inherits: inherits,
       );
     }
 
@@ -176,7 +176,7 @@ class WxAnchorStyle with Diagnosticable {
         hoveredStyle: other.hoveredStyle,
         pressedStyle: other.pressedStyle,
         disabledStyle: other.disabledStyle,
-        inherited: other.inherited,
+        inherits: other.inherits,
       );
     }
 
@@ -232,7 +232,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     implements DrivenProperty<WxAnchorStyle> {
   /// Whether the resolved style is merged to
   /// the previous resolved style or not
-  final bool? inherited;
+  final bool? inherits;
 
   /// The style to be resolved when
   /// events includes [WxAnchorEvent.focused].
@@ -272,7 +272,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     this.hoveredStyle,
     this.pressedStyle,
     this.disabledStyle,
-    this.inherited,
+    this.inherits,
   });
 
   /// Create a [WxDrivenAnchorStyle] with value
@@ -283,13 +283,13 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     this.hoveredStyle,
     this.pressedStyle,
     this.disabledStyle,
-    this.inherited,
+    this.inherits,
   }) : super.from();
 
   /// Create a [WxDrivenAnchorStyle] from a resolver callback
   WxDrivenAnchorStyle.resolver(
     DrivenPropertyResolver<WxAnchorStyle?> resolver, {
-    this.inherited = false,
+    this.inherits = false,
   })  : focusedStyle = resolver({WidgetEvent.focused}),
         hoveredStyle = resolver({WidgetEvent.hovered}),
         pressedStyle = resolver({WidgetEvent.pressed}),
@@ -308,7 +308,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     this.hoveredStyle,
     this.pressedStyle,
     this.disabledStyle,
-    this.inherited,
+    this.inherits,
   }) : super.rectangle();
 
   /// Create a circle shaped [WxDrivenAnchorStyle].
@@ -323,7 +323,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     this.hoveredStyle,
     this.pressedStyle,
     this.disabledStyle,
-    this.inherited,
+    this.inherits,
   }) : super.circle();
 
   /// Resolves the value for the given set of events
@@ -358,7 +358,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     Color? overlayColor,
     double? overlayOpacity,
     bool? overlayDisabled,
-    bool? inherited,
+    bool? inherits,
     WxAnchorStyle? focusedStyle,
     WxAnchorStyle? hoveredStyle,
     WxAnchorStyle? pressedStyle,
@@ -375,7 +375,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
         overlayOpacity: overlayOpacity,
         overlayDisabled: overlayDisabled,
       ),
-      inherited: inherited ?? this.inherited,
+      inherits: inherits ?? this.inherits,
       focusedStyle: this.focusedStyle?.merge(focusedStyle) ?? focusedStyle,
       hoveredStyle: this.hoveredStyle?.merge(hoveredStyle) ?? hoveredStyle,
       pressedStyle: this.pressedStyle?.merge(pressedStyle) ?? pressedStyle,
@@ -386,7 +386,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('inherited', inherited));
+    properties.add(DiagnosticsProperty('inherits', inherits));
     properties.add(DiagnosticsProperty('focusedStyle', focusedStyle));
     properties.add(DiagnosticsProperty('hoveredStyle', hoveredStyle));
     properties.add(DiagnosticsProperty('pressedStyle', pressedStyle));
