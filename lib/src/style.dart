@@ -38,6 +38,11 @@ class WxAnchorStyle with Diagnosticable {
   /// {@endtemplate}
   final BorderRadius? borderRadius;
 
+  /// {@template widgetarian.anchor.style.scale}
+  /// The child scale of the anchor when pressed, hovered over, or focused.
+  /// {@endtemplate}
+  final double? scale;
+
   /// {@template widgetarian.anchor.style.opacity}
   /// The child opacity of the anchor when pressed, hovered over, or focused.
   /// {@endtemplate}
@@ -70,6 +75,7 @@ class WxAnchorStyle with Diagnosticable {
     this.shape,
     this.radius,
     this.borderRadius,
+    this.scale,
     this.opacity,
     this.overlayColor,
     this.overlayOpacity,
@@ -81,6 +87,7 @@ class WxAnchorStyle with Diagnosticable {
     this.margin,
     this.padding,
     this.borderRadius,
+    this.scale,
     this.opacity,
     this.overlayColor,
     this.overlayOpacity,
@@ -93,6 +100,7 @@ class WxAnchorStyle with Diagnosticable {
     this.margin,
     this.padding,
     this.radius,
+    this.scale,
     this.opacity,
     this.overlayColor,
     this.overlayOpacity,
@@ -106,6 +114,7 @@ class WxAnchorStyle with Diagnosticable {
         padding = other?.padding,
         shape = other?.shape,
         radius = other?.radius,
+        scale = other?.scale,
         opacity = other?.opacity,
         borderRadius = other?.borderRadius,
         overlayColor = other?.overlayColor,
@@ -120,6 +129,7 @@ class WxAnchorStyle with Diagnosticable {
     BoxShape? shape,
     double? radius,
     BorderRadius? borderRadius,
+    double? scale,
     double? opacity,
     Color? overlayColor,
     double? overlayOpacity,
@@ -136,6 +146,7 @@ class WxAnchorStyle with Diagnosticable {
       shape: shape ?? this.shape,
       radius: radius ?? this.radius,
       borderRadius: borderRadius ?? this.borderRadius,
+      scale: scale ?? this.scale,
       opacity: opacity ?? this.opacity,
       overlayColor: overlayColor ?? this.overlayColor,
       overlayOpacity: overlayOpacity ?? this.overlayOpacity,
@@ -176,6 +187,7 @@ class WxAnchorStyle with Diagnosticable {
       shape: other.shape,
       radius: other.radius,
       borderRadius: other.borderRadius,
+      scale: other.scale,
       opacity: other.opacity,
       overlayColor: other.overlayColor,
       overlayOpacity: other.overlayOpacity,
@@ -204,6 +216,7 @@ class WxAnchorStyle with Diagnosticable {
       shape: lerpEnum(a?.shape, b?.shape, t),
       radius: lerpDouble(a?.radius, b?.radius, t),
       borderRadius: BorderRadius.lerp(a?.borderRadius, b?.borderRadius, t),
+      scale: lerpDouble(a?.scale, b?.scale, t),
       opacity: lerpDouble(a?.opacity, b?.opacity, t),
       overlayColor: Color.lerp(a?.overlayColor, b?.overlayColor, t),
       overlayOpacity: lerpDouble(a?.overlayOpacity, b?.overlayOpacity, t),
@@ -217,6 +230,7 @@ class WxAnchorStyle with Diagnosticable {
         'shape': shape,
         'radius': radius,
         'borderRadius': borderRadius,
+        'scale': scale,
         'opacity': opacity,
         'overlayColor': overlayColor,
         'overlayOpacity': overlayOpacity,
@@ -279,6 +293,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.shape,
     super.radius,
     super.borderRadius,
+    super.scale,
     super.opacity,
     super.overlayColor,
     super.overlayOpacity,
@@ -316,6 +331,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.margin,
     super.padding,
     super.borderRadius,
+    super.scale,
     super.opacity,
     super.overlayColor,
     super.overlayOpacity,
@@ -332,6 +348,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.margin,
     super.padding,
     super.radius,
+    super.scale,
     super.opacity,
     super.overlayColor,
     super.overlayOpacity,
@@ -372,6 +389,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     BoxShape? shape,
     double? radius,
     BorderRadius? borderRadius,
+    double? scale,
     double? opacity,
     Color? overlayColor,
     double? overlayOpacity,
@@ -389,6 +407,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
         shape: shape,
         radius: radius,
         borderRadius: borderRadius,
+        scale: scale,
         opacity: opacity,
         overlayColor: overlayColor,
         overlayOpacity: overlayOpacity,
