@@ -10,6 +10,8 @@ Clickable zone within a widget that activates an interactive overlay upon touch 
 
 To read more about classes and other references used by `wx_anchor`, see the [API Reference](https://pub.dev/documentation/wx_anchor/latest/).
 
+### Overlay Effect
+`WxAnchor` has a default overlay effect that changes the opacity based on user interactions (`focused`, `hovered`, `pressed`, and `disabled`).
 ```dart
 // Rectangle shape
 WxAnchor(
@@ -25,19 +27,55 @@ WxAnchor(
 // Circle shape
 WxAnchor.circle(
   onTap: () {},
-  radius: 20,
+  radius: 20, // overlay radius
   child: const Icon(Icons.chat),
 )
+```
 
-// Circle shape with complex interaction
+### Disable Overlay effect
+```dart
 WxAnchor(
   onTap: () {},
-  style: const WxDrivenAnchorStyle.circle(
-    radius: 0,
-    hoveredStyle: WxAnchorStyle(radius: 25),
-    pressedStyle: WxAnchorStyle(radius: 20),
+  overlayDisabled: true,
+  child: const Text('Click Here'),
+)
+```
+
+### Customize Overlay Effect
+```dart
+// Changes overlay opacity based on user interaction
+WxAnchor(
+  onTap: () {},
+  overlayColor: Colors.amber,
+  focusedStyle: const WxAnchorStyle(overlayOpacity: 0.25),
+  hoveredStyle: const WxAnchorStyle(overlayOpacity: 0.15),
+  pressedStyle: const WxAnchorStyle(
+    overlayOpacity: 0.25,
+    overlayColor: Colors.red,
   ),
+  borderRadius: BorderRadius.circular(15),
   child: const Icon(Icons.power_off),
+)
+
+// Changes overlay radius based on user interaction
+WxAnchor.circle(
+  onTap: () {},
+  radius: 0,
+  hoveredStyle: const WxAnchorStyle(radius: 25),
+  pressedStyle: const WxAnchorStyle(radius: 20),
+  child: const Icon(Icons.power_off),
+)
+```
+
+### Child Opacity & Scale
+```dart
+WxAnchor.circle(
+  onTap: () {},
+  opacity: 1,
+  scale: 1,
+  hoveredStyle: const WxAnchorStyle(opacity: .7, scale: 1.1),
+  pressedStyle: const WxAnchorStyle(opacity: 1, scale: 1),
+  child: const Icon(Icons.chat),
 )
 ```
 

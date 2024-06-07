@@ -1,3 +1,8 @@
+## 1.3.0
+
+* Added option to animate child opacity on event driven
+* Added option to animate child scale on event driven
+
 ## 1.2.0
 
 * Renamed inherited to inherits
