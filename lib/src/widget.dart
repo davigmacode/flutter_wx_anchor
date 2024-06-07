@@ -25,6 +25,7 @@ class WxAnchor extends StatelessWidget {
     this.onLongPress,
     this.onHover,
     this.onFocus,
+    this.opacity,
     this.overlayDisabled,
     this.overlayColor,
     this.overlayOpacity,
@@ -60,6 +61,7 @@ class WxAnchor extends StatelessWidget {
     this.onLongPress,
     this.onHover,
     this.onFocus,
+    this.opacity,
     this.overlayDisabled,
     this.overlayColor,
     this.overlayOpacity,
@@ -116,6 +118,9 @@ class WxAnchor extends StatelessWidget {
 
   /// The cursor for a mouse pointer when it enters or is hovering over the widget.
   final MouseCursor? mouseCursor;
+
+  /// {@macro widgetarian.anchor.style.opacity}
+  final double? opacity;
 
   /// {@macro widgetarian.anchor.style.overlayDisabled}
   final bool? overlayDisabled;
@@ -196,6 +201,7 @@ class WxAnchor extends StatelessWidget {
           shape: shape,
           radius: radius,
           borderRadius: borderRadius,
+          opacity: opacity,
           overlayColor: overlayColor,
           overlayOpacity: overlayOpacity,
           overlayDisabled: overlayDisabled,
@@ -491,6 +497,15 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
         child: result,
       ),
     );
+
+    if (widget.clickable) {
+      result = AnimatedOpacity(
+        opacity: style.opacity ?? 1,
+        curve: widget.curve,
+        duration: widget.duration,
+        child: result,
+      );
+    }
 
     if (style.overlayEnabled && widget.enabled && widget.clickable) {
       result = AnimatedOverlay(

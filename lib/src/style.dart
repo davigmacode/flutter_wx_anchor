@@ -38,6 +38,11 @@ class WxAnchorStyle with Diagnosticable {
   /// {@endtemplate}
   final BorderRadius? borderRadius;
 
+  /// {@template widgetarian.anchor.style.opacity}
+  /// The child opacity of the anchor when pressed, hovered over, or focused.
+  /// {@endtemplate}
+  final double? opacity;
+
   /// {@template widgetarian.anchor.style.overlayColor}
   /// The overlay color of the anchor when pressed, hovered over, or focused.
   /// {@endtemplate}
@@ -65,6 +70,7 @@ class WxAnchorStyle with Diagnosticable {
     this.shape,
     this.radius,
     this.borderRadius,
+    this.opacity,
     this.overlayColor,
     this.overlayOpacity,
     this.overlayDisabled,
@@ -75,6 +81,7 @@ class WxAnchorStyle with Diagnosticable {
     this.margin,
     this.padding,
     this.borderRadius,
+    this.opacity,
     this.overlayColor,
     this.overlayOpacity,
     this.overlayDisabled,
@@ -86,6 +93,7 @@ class WxAnchorStyle with Diagnosticable {
     this.margin,
     this.padding,
     this.radius,
+    this.opacity,
     this.overlayColor,
     this.overlayOpacity,
     this.overlayDisabled,
@@ -98,6 +106,7 @@ class WxAnchorStyle with Diagnosticable {
         padding = other?.padding,
         shape = other?.shape,
         radius = other?.radius,
+        opacity = other?.opacity,
         borderRadius = other?.borderRadius,
         overlayColor = other?.overlayColor,
         overlayOpacity = other?.overlayOpacity,
@@ -111,6 +120,7 @@ class WxAnchorStyle with Diagnosticable {
     BoxShape? shape,
     double? radius,
     BorderRadius? borderRadius,
+    double? opacity,
     Color? overlayColor,
     double? overlayOpacity,
     bool? overlayDisabled,
@@ -126,6 +136,7 @@ class WxAnchorStyle with Diagnosticable {
       shape: shape ?? this.shape,
       radius: radius ?? this.radius,
       borderRadius: borderRadius ?? this.borderRadius,
+      opacity: opacity ?? this.opacity,
       overlayColor: overlayColor ?? this.overlayColor,
       overlayOpacity: overlayOpacity ?? this.overlayOpacity,
       overlayDisabled: overlayDisabled ?? this.overlayDisabled,
@@ -165,6 +176,7 @@ class WxAnchorStyle with Diagnosticable {
       shape: other.shape,
       radius: other.radius,
       borderRadius: other.borderRadius,
+      opacity: other.opacity,
       overlayColor: other.overlayColor,
       overlayOpacity: other.overlayOpacity,
       overlayDisabled: other.overlayDisabled,
@@ -192,6 +204,7 @@ class WxAnchorStyle with Diagnosticable {
       shape: lerpEnum(a?.shape, b?.shape, t),
       radius: lerpDouble(a?.radius, b?.radius, t),
       borderRadius: BorderRadius.lerp(a?.borderRadius, b?.borderRadius, t),
+      opacity: lerpDouble(a?.opacity, b?.opacity, t),
       overlayColor: Color.lerp(a?.overlayColor, b?.overlayColor, t),
       overlayOpacity: lerpDouble(a?.overlayOpacity, b?.overlayOpacity, t),
       overlayDisabled: lerpBool(a?.overlayDisabled, b?.overlayDisabled, t),
@@ -204,6 +217,7 @@ class WxAnchorStyle with Diagnosticable {
         'shape': shape,
         'radius': radius,
         'borderRadius': borderRadius,
+        'opacity': opacity,
         'overlayColor': overlayColor,
         'overlayOpacity': overlayOpacity,
         'overlayDisabled': overlayDisabled,
@@ -265,6 +279,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.shape,
     super.radius,
     super.borderRadius,
+    super.opacity,
     super.overlayColor,
     super.overlayOpacity,
     super.overlayDisabled,
@@ -301,6 +316,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.margin,
     super.padding,
     super.borderRadius,
+    super.opacity,
     super.overlayColor,
     super.overlayOpacity,
     super.overlayDisabled,
@@ -316,6 +332,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.margin,
     super.padding,
     super.radius,
+    super.opacity,
     super.overlayColor,
     super.overlayOpacity,
     super.overlayDisabled,
@@ -355,6 +372,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     BoxShape? shape,
     double? radius,
     BorderRadius? borderRadius,
+    double? opacity,
     Color? overlayColor,
     double? overlayOpacity,
     bool? overlayDisabled,
@@ -371,6 +389,7 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
         shape: shape,
         radius: radius,
         borderRadius: borderRadius,
+        opacity: opacity,
         overlayColor: overlayColor,
         overlayOpacity: overlayOpacity,
         overlayDisabled: overlayDisabled,
