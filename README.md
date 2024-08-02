@@ -61,8 +61,8 @@ WxAnchor(
 WxAnchor.circle(
   onTap: () {},
   radius: 0,
-  hoveredStyle: const WxAnchorStyle(radius: 25),
-  pressedStyle: const WxAnchorStyle(radius: 20),
+  hoveredStyle: const WxAnchorStyle.circle(radius: 25),
+  pressedStyle: const WxAnchorStyle.circle(radius: 20),
   child: const Icon(Icons.power_off),
 )
 ```
@@ -73,6 +73,7 @@ WxAnchor.circle(
   onTap: () {},
   opacity: 1,
   scale: 1,
+  overlayDisabled: true,
   hoveredStyle: const WxAnchorStyle(opacity: .7, scale: 1.1),
   pressedStyle: const WxAnchorStyle(opacity: 1, scale: 1),
   child: const Icon(Icons.chat),

@@ -1,3 +1,10 @@
+## 2.0.0
+
+* Update `widget_event` to v2.0.0
+* Overlay shape use ShapeBorder rather than BoxShape
+* Adjust style and widget constructor
+* Themeable overlay, feedback, focusable, disabled, and mouseCursor properties
+
 ## 1.3.0
 
 * Added option to animate child opacity on event driven
