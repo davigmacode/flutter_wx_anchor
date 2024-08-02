@@ -28,6 +28,9 @@ class WxAnchorTheme extends InheritedTheme {
     TargetPlatform? platform,
     WxAnchorStyle? style,
     bool? overlay,
+    bool? feedback,
+    bool? focusable,
+    bool? disabled,
     WxAnchorThemeData? data,
     required Widget child,
   }) {
@@ -42,6 +45,9 @@ class WxAnchorTheme extends InheritedTheme {
                 platform: platform,
                 style: style,
                 overlay: overlay,
+                feedback: feedback,
+                focusable: focusable,
+                disabled: disabled,
               ),
           child: child,
         );

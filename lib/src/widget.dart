@@ -43,9 +43,9 @@ class WxAnchor extends StatelessWidget {
     this.eventsController,
     this.focusNode,
     this.autofocus = false,
-    this.canRequestFocus = true,
-    this.feedbackDisabled = false,
-    this.disabled = false,
+    this.focusable,
+    this.feedback,
+    this.disabled,
     this.child,
   }) : shape = RoundedRectangleBorder(borderRadius: borderRadius);
 
@@ -79,9 +79,9 @@ class WxAnchor extends StatelessWidget {
     this.eventsController,
     this.focusNode,
     this.autofocus = false,
-    this.canRequestFocus = true,
-    this.feedbackDisabled = false,
-    this.disabled = false,
+    this.focusable,
+    this.feedback,
+    this.disabled,
     this.child,
   })  : shape = const CircleBorder(),
         extent = radius != null ? Size.fromRadius(radius) : null;
@@ -117,9 +117,9 @@ class WxAnchor extends StatelessWidget {
     this.eventsController,
     this.focusNode,
     this.autofocus = false,
-    this.canRequestFocus = true,
-    this.feedbackDisabled = false,
-    this.disabled = false,
+    this.focusable,
+    this.feedback,
+    this.disabled,
     this.child,
   });
 
@@ -215,7 +215,7 @@ class WxAnchor extends StatelessWidget {
   final bool autofocus;
 
   /// {@macro flutter.widgets.Focus.canRequestFocus}
-  final bool canRequestFocus;
+  final bool? focusable;
 
   /// Whether detected gestures should disable acoustic and/or haptic feedback.
   ///
@@ -225,10 +225,10 @@ class WxAnchor extends StatelessWidget {
   /// See also:
   ///
   ///  * [Feedback] for providing platform-specific feedback to certain actions.
-  final bool feedbackDisabled;
+  final bool? feedback;
 
   /// Whether or not this widget is disabled for interaction.
-  final bool disabled;
+  final bool? disabled;
 
   /// The widget below this widget in the tree.
   final Widget? child;
@@ -257,6 +257,9 @@ class WxAnchor extends StatelessWidget {
         .merge(anchorTheme.style)
         .merge(effectiveStyle);
     final themedOverlay = overlay ?? anchorTheme.overlay;
+    final themedFeedback = feedback ?? anchorTheme.feedback;
+    final themedFocusable = focusable ?? anchorTheme.focusable;
+    final themedDisabled = disabled ?? anchorTheme.disabled;
     final parentState = _WxAnchorRenderProvider.of(context);
     return _WxAnchorRender(
       parentState: parentState,
@@ -275,10 +278,10 @@ class WxAnchor extends StatelessWidget {
       eventsController: eventsController,
       focusNode: focusNode,
       autofocus: autofocus,
-      canRequestFocus: canRequestFocus,
-      feedbackDisabled: feedbackDisabled,
+      focusable: themedFocusable,
       overlay: themedOverlay,
-      disabled: disabled,
+      feedback: themedFeedback,
+      disabled: themedDisabled,
       style: themedStyle,
       child: child,
     );
@@ -297,8 +300,8 @@ class WxAnchor extends StatelessWidget {
     ];
     properties.add(IterableProperty('gestures', gestures, ifEmpty: '<none>'));
     properties.add(DiagnosticsProperty('disabled', disabled));
-    properties.add(DiagnosticsProperty('feedbackDisabled', feedbackDisabled));
-    properties.add(DiagnosticsProperty('canRequestFocus', canRequestFocus));
+    properties.add(DiagnosticsProperty('feedback', feedback));
+    properties.add(DiagnosticsProperty('focusable', focusable));
     properties.add(DiagnosticsProperty('autofocus', autofocus));
     properties.add(DiagnosticsProperty('focusNode', focusNode));
     properties.add(DiagnosticsProperty('eventsController', eventsController));
@@ -308,7 +311,7 @@ class WxAnchor extends StatelessWidget {
     properties.add(DiagnosticsProperty('extent', extent));
     properties.add(DoubleProperty('overlayOpacity', overlayOpacity));
     properties.add(ColorProperty('overlayColor', overlayColor));
-    properties.add(DiagnosticsProperty('overlayDisabled', overlay));
+    properties.add(DiagnosticsProperty('overlay', overlay));
     properties.add(DiagnosticsProperty('mouseCursor', mouseCursor));
     properties.add(DiagnosticsProperty('style', style));
     properties.add(DiagnosticsProperty('effectiveStyle', effectiveStyle));
@@ -333,10 +336,10 @@ class _WxAnchorRender extends StatefulWidget {
     this.eventsController,
     this.focusNode,
     this.autofocus = false,
-    this.canRequestFocus = true,
-    this.feedbackDisabled = false,
-    this.disabled = false,
+    this.focusable = true,
     this.overlay = true,
+    this.feedback = true,
+    this.disabled = false,
     required this.style,
     this.child,
   });
@@ -357,8 +360,8 @@ class _WxAnchorRender extends StatefulWidget {
   final WidgetEventController? eventsController;
   final FocusNode? focusNode;
   final bool autofocus;
-  final bool canRequestFocus;
-  final bool feedbackDisabled;
+  final bool focusable;
+  final bool feedback;
   final bool disabled;
   final bool overlay;
   final WxAnchorStyle style;
@@ -408,7 +411,7 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
         NavigationMode.traditional;
     switch (mode) {
       case NavigationMode.traditional:
-        return widget.enabled && widget.canRequestFocus;
+        return widget.enabled && widget.focusable;
       case NavigationMode.directional:
         return true;
     }
@@ -417,7 +420,7 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
   void _onTap() {
     if (!childrenActive) {
       if (widget.onTap != null) {
-        if (!widget.feedbackDisabled) {
+        if (!widget.feedback) {
           Feedback.forTap(context, widget.platform);
         }
         widget.onTap?.call();

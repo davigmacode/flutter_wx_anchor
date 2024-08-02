@@ -49,6 +49,22 @@ class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
   /// Whether the overlay is enabled or not
   final bool overlay;
 
+  /// Whether detected gestures should provide acoustic and/or haptic feedback.
+  ///
+  /// For example, on Android a tap will produce a clicking sound and a
+  /// long-press will produce a short vibration, when feedback is enabled.
+  ///
+  /// See also:
+  ///
+  ///  * [Feedback] for providing platform-specific feedback to certain actions.
+  final bool feedback;
+
+  /// {@macro flutter.widgets.Focus.canRequestFocus}
+  final bool focusable;
+
+  /// Whether the descent [WxAnchor] is disabled for interaction.
+  final bool disabled;
+
   /// Creates a theme data that can be used for [WxAnchorTheme].
   const WxAnchorThemeData({
     this.curve = Curves.linear,
@@ -56,6 +72,9 @@ class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
     this.platform = TargetPlatform.android,
     this.style = const WxAnchorStyle(),
     this.overlay = true,
+    this.feedback = true,
+    this.focusable = true,
+    this.disabled = false,
   });
 
   /// Creates a [WxAnchorThemeData] from another one that probably null.
@@ -66,23 +85,33 @@ class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
         duration = other?.duration ?? fallback.duration,
         platform = other?.platform ?? fallback.platform,
         style = other?.style ?? fallback.style,
-        overlay = other?.overlay ?? fallback.overlay;
+        overlay = other?.overlay ?? fallback.overlay,
+        feedback = other?.feedback ?? fallback.feedback,
+        focusable = other?.focusable ?? fallback.focusable,
+        disabled = other?.disabled ?? fallback.disabled;
 
   /// Creates a copy of this [WxAnchorThemeData] but with
   /// the given fields replaced with the new values.
   @override
-  WxAnchorThemeData copyWith(
-      {Curve? curve,
-      Duration? duration,
-      TargetPlatform? platform,
-      WxAnchorStyle? style,
-      bool? overlay}) {
+  WxAnchorThemeData copyWith({
+    Curve? curve,
+    Duration? duration,
+    TargetPlatform? platform,
+    WxAnchorStyle? style,
+    bool? overlay,
+    bool? feedback,
+    bool? focusable,
+    bool? disabled,
+  }) {
     return WxAnchorThemeData(
       curve: curve ?? this.curve,
       duration: duration ?? this.duration,
       platform: platform ?? this.platform,
       style: this.style.merge(style),
       overlay: overlay ?? this.overlay,
+      feedback: feedback ?? this.feedback,
+      focusable: focusable ?? this.focusable,
+      disabled: disabled ?? this.disabled,
     );
   }
 
@@ -98,6 +127,9 @@ class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
       platform: other.platform,
       style: other.style,
       overlay: other.overlay,
+      feedback: other.feedback,
+      focusable: other.focusable,
+      disabled: other.disabled,
     );
   }
 
@@ -110,6 +142,9 @@ class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
       platform: lerpEnum(platform, other.platform, t) ?? platform,
       style: WxAnchorStyle.lerp(style, other.style, t) ?? style,
       overlay: lerpBool(overlay, other.overlay, t) ?? overlay,
+      feedback: lerpBool(feedback, other.feedback, t) ?? feedback,
+      focusable: lerpBool(focusable, other.focusable, t) ?? focusable,
+      disabled: lerpBool(disabled, other.disabled, t) ?? disabled,
     );
   }
 
@@ -119,6 +154,9 @@ class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
         'platform': platform,
         'style': style,
         'overlay': overlay,
+        'feedback': feedback,
+        'focusable': focusable,
+        'disabled': disabled,
       };
 
   @override

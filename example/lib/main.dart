@@ -63,7 +63,10 @@ class MyHomePage extends StatelessWidget {
                 onTap: () {},
                 extent: Size.zero,
                 overlayColor: Colors.amber,
-                focusedStyle: const WxAnchorStyle(overlayOpacity: 0.25),
+                focusedStyle: const WxAnchorStyle(
+                  overlayOpacity: 0.25,
+                  extent: Size(130, 40),
+                ),
                 hoveredStyle: const WxAnchorStyle(
                   overlayOpacity: 0.15,
                   extent: Size(130, 40),
@@ -96,6 +99,7 @@ class MyHomePage extends StatelessWidget {
                 radius: 0,
                 hoveredStyle: WxAnchorStyle.circle(radius: 25),
                 pressedStyle: WxAnchorStyle.circle(radius: 20),
+                focusedStyle: WxAnchorStyle.circle(radius: 20),
                 child: const Icon(Icons.power_off),
               ),
               WxAnchor.circle(
@@ -105,6 +109,7 @@ class MyHomePage extends StatelessWidget {
                 overlay: false,
                 hoveredStyle: const WxAnchorStyle(opacity: .7, scale: 1),
                 pressedStyle: const WxAnchorStyle(opacity: 1, scale: 1.5),
+                focusedStyle: const WxAnchorStyle(opacity: 1, scale: 1.5),
                 child: const Icon(Icons.star),
               ),
             ],
