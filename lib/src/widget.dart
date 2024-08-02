@@ -260,6 +260,7 @@ class WxAnchor extends StatelessWidget {
     final themedFeedback = feedback ?? anchorTheme.feedback;
     final themedFocusable = focusable ?? anchorTheme.focusable;
     final themedDisabled = disabled ?? anchorTheme.disabled;
+    final themedMouseCursor = mouseCursor ?? anchorTheme.mouseCursor;
     final parentState = _WxAnchorRenderProvider.of(context);
     return _WxAnchorRender(
       parentState: parentState,
@@ -274,7 +275,7 @@ class WxAnchor extends StatelessWidget {
       onLongPress: onLongPress,
       onHover: onHover,
       onFocus: onFocus,
-      mouseCursor: mouseCursor,
+      mouseCursor: themedMouseCursor,
       eventsController: eventsController,
       focusNode: focusNode,
       autofocus: autofocus,

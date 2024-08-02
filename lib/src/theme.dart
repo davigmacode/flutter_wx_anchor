@@ -31,6 +31,7 @@ class WxAnchorTheme extends InheritedTheme {
     bool? feedback,
     bool? focusable,
     bool? disabled,
+    MouseCursor? mouseCursor,
     WxAnchorThemeData? data,
     required Widget child,
   }) {
@@ -48,6 +49,7 @@ class WxAnchorTheme extends InheritedTheme {
                 feedback: feedback,
                 focusable: focusable,
                 disabled: disabled,
+                mouseCursor: mouseCursor,
               ),
           child: child,
         );
