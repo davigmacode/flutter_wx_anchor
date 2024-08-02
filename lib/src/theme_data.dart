@@ -9,7 +9,6 @@ import 'theme_preset.dart';
 /// Descendant widgets obtain the current [WxAnchorThemeData] object using
 /// `WxAnchorTheme.of(context)`. Instances of [WxAnchorThemeData]
 /// can be customized with [WxAnchorThemeData.copyWith] or [WxAnchorThemeData.merge].
-@immutable
 class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
     with Diagnosticable {
   /// The curve to apply when animating the parameters of anchor widget.

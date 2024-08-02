@@ -48,6 +48,7 @@ class MyHomePage extends StatelessWidget {
           title: 'Rectangle Shape',
           child: Wrap(
             spacing: 30,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               WxAnchor(
                 onTap: () {},
@@ -60,18 +61,19 @@ class MyHomePage extends StatelessWidget {
               ),
               WxAnchor(
                 onTap: () {},
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 6,
-                ),
+                extent: Size.zero,
                 overlayColor: Colors.amber,
                 focusedStyle: const WxAnchorStyle(overlayOpacity: 0.25),
-                hoveredStyle: const WxAnchorStyle(overlayOpacity: 0.15),
-                pressedStyle: const WxAnchorStyle(
+                hoveredStyle: const WxAnchorStyle(
+                  overlayOpacity: 0.15,
+                  extent: Size(130, 40),
+                ),
+                pressedStyle: WxAnchorStyle.rectangle(
                   overlayOpacity: 0.25,
                   overlayColor: Colors.blue,
+                  borderRadius: BorderRadius.circular(5),
                 ),
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(15),
                 child: const Text('Custom Overlay'),
               ),
             ],
@@ -82,16 +84,18 @@ class MyHomePage extends StatelessWidget {
           title: 'Circle Shape',
           child: Wrap(
             spacing: 40,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               WxAnchor.circle(
                 onTap: () {},
+                padding: const EdgeInsets.all(10),
                 child: const Icon(Icons.chat),
               ),
               WxAnchor.circle(
                 onTap: () {},
                 radius: 0,
-                hoveredStyle: const WxAnchorStyle(radius: 25),
-                pressedStyle: const WxAnchorStyle(radius: 20),
+                hoveredStyle: WxAnchorStyle.circle(radius: 25),
+                pressedStyle: WxAnchorStyle.circle(radius: 20),
                 child: const Icon(Icons.power_off),
               ),
               WxAnchor.circle(

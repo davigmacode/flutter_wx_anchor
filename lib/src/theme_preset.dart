@@ -2,16 +2,24 @@ import 'package:flutter/material.dart';
 import 'style.dart';
 import 'theme_data.dart';
 
-@immutable
-class WxAnchorThemeDefaults extends WxAnchorThemeData {
-  WxAnchorThemeDefaults(BuildContext context)
-      : super.from(WxAnchorThemeData.fallback.copyWith(
-          platform: Theme.of(context).platform,
-        ));
+class WxAnchorThemePreset extends WxAnchorThemeData {
+  WxAnchorThemePreset(this.context) : super.from();
+
+  final BuildContext context;
+
+  ThemeData? _appTheme;
+  ThemeData get appTheme => _appTheme ??= Theme.of(context);
+
+  @override
+  get platform => appTheme.platform;
+}
+
+class WxAnchorThemeDefaults extends WxAnchorThemePreset {
+  WxAnchorThemeDefaults(super.context);
 
   @override
   get style => const WxDrivenAnchorStyle(
-        shape: BoxShape.rectangle,
+        shape: RoundedRectangleBorder(),
         overlayDisabled: false,
         overlayOpacity: 0,
         focusedStyle: WxAnchorStyle(overlayOpacity: 0.15),

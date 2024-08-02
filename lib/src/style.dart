@@ -23,20 +23,12 @@ class WxAnchorStyle with Diagnosticable {
   /// The shape (e.g., circle, rectangle) to use for the overlay drawn around
   /// this part of the anchor when pressed, hovered over, or focused.
   /// {@endtemplate}
-  final BoxShape? shape;
+  final ShapeBorder? shape;
 
-  /// {@template widgetarian.anchor.style.radius}
-  /// The radius of the overlay. If the [shape] is [BoxShape.circle].
+  /// {@template widgetarian.anchor.style.extent}
+  /// The extent of the overlay.
   /// {@endtemplate}
-  final double? radius;
-
-  /// {@template widgetarian.anchor.style.borderRadius}
-  /// The clipping radius of the containing rect. This is effective only if
-  /// the [shape] is [BoxShape.circle].
-  ///
-  /// If this is null, it is interpreted as [BorderRadius.zero].
-  /// {@endtemplate}
-  final BorderRadius? borderRadius;
+  final Size? extent;
 
   /// {@template widgetarian.anchor.style.scale}
   /// The child scale of the anchor when pressed, hovered over, or focused.
@@ -68,13 +60,12 @@ class WxAnchorStyle with Diagnosticable {
   /// {@endtemplate}
   bool get overlayEnabled => overlayDisabled != true;
 
-  /// Create an anchor style.
+  /// Create a raw anchor style.
   const WxAnchorStyle({
     this.margin,
     this.padding,
     this.shape,
-    this.radius,
-    this.borderRadius,
+    this.extent,
     this.scale,
     this.opacity,
     this.overlayColor,
@@ -83,40 +74,39 @@ class WxAnchorStyle with Diagnosticable {
   });
 
   /// Create an anchor style with rectangle shape.
-  const WxAnchorStyle.rectangle({
+  WxAnchorStyle.rectangle({
+    BorderRadius borderRadius = BorderRadius.zero,
     this.margin,
     this.padding,
-    this.borderRadius,
+    this.extent,
     this.scale,
     this.opacity,
     this.overlayColor,
     this.overlayOpacity,
     this.overlayDisabled,
-  })  : shape = BoxShape.rectangle,
-        radius = null;
+  }) : shape = RoundedRectangleBorder(borderRadius: borderRadius);
 
   /// Create an anchor style with circle shape.
-  const WxAnchorStyle.circle({
+  WxAnchorStyle.circle({
+    double? radius,
     this.margin,
     this.padding,
-    this.radius,
     this.scale,
     this.opacity,
     this.overlayColor,
     this.overlayOpacity,
     this.overlayDisabled,
-  })  : shape = BoxShape.circle,
-        borderRadius = null;
+  })  : shape = const CircleBorder(),
+        extent = radius != null ? Size.fromRadius(radius) : null;
 
   /// Create a [WxAnchorStyle] from another style
   WxAnchorStyle.from(WxAnchorStyle? other)
       : margin = other?.margin,
         padding = other?.padding,
         shape = other?.shape,
-        radius = other?.radius,
+        extent = other?.extent,
         scale = other?.scale,
         opacity = other?.opacity,
-        borderRadius = other?.borderRadius,
         overlayColor = other?.overlayColor,
         overlayOpacity = other?.overlayOpacity,
         overlayDisabled = other?.overlayDisabled;
@@ -126,53 +116,26 @@ class WxAnchorStyle with Diagnosticable {
   WxAnchorStyle copyWith({
     EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? padding,
-    BoxShape? shape,
-    double? radius,
-    BorderRadius? borderRadius,
+    ShapeBorder? shape,
+    Size? extent,
     double? scale,
     double? opacity,
     Color? overlayColor,
     double? overlayOpacity,
     bool? overlayDisabled,
     bool? inherits,
-    WxAnchorStyle? focusedStyle,
-    WxAnchorStyle? hoveredStyle,
-    WxAnchorStyle? pressedStyle,
-    WxAnchorStyle? disabledStyle,
   }) {
-    final style = WxAnchorStyle(
+    return WxAnchorStyle(
       margin: margin ?? this.margin,
       padding: padding ?? this.padding,
       shape: shape ?? this.shape,
-      radius: radius ?? this.radius,
-      borderRadius: borderRadius ?? this.borderRadius,
+      extent: extent ?? this.extent,
       scale: scale ?? this.scale,
       opacity: opacity ?? this.opacity,
       overlayColor: overlayColor ?? this.overlayColor,
       overlayOpacity: overlayOpacity ?? this.overlayOpacity,
       overlayDisabled: overlayDisabled ?? this.overlayDisabled,
     );
-
-    final hasDrivenStyle = [
-      inherits,
-      focusedStyle,
-      hoveredStyle,
-      pressedStyle,
-      disabledStyle,
-    ].any((el) => el != null);
-
-    if (hasDrivenStyle) {
-      return WxDrivenAnchorStyle.from(
-        style,
-        focusedStyle: focusedStyle,
-        hoveredStyle: hoveredStyle,
-        pressedStyle: pressedStyle,
-        disabledStyle: disabledStyle,
-        inherits: inherits,
-      );
-    }
-
-    return style;
   }
 
   /// Creates a copy of this [WxAnchorStyle] but with
@@ -181,30 +144,17 @@ class WxAnchorStyle with Diagnosticable {
     // if null return current object
     if (other == null) return this;
 
-    var style = copyWith(
+    return copyWith(
       margin: other.margin,
       padding: other.padding,
       shape: other.shape,
-      radius: other.radius,
-      borderRadius: other.borderRadius,
+      extent: other.extent,
       scale: other.scale,
       opacity: other.opacity,
       overlayColor: other.overlayColor,
       overlayOpacity: other.overlayOpacity,
       overlayDisabled: other.overlayDisabled,
     );
-
-    if (other is WxDrivenAnchorStyle) {
-      style = style.copyWith(
-        focusedStyle: other.focusedStyle,
-        hoveredStyle: other.hoveredStyle,
-        pressedStyle: other.pressedStyle,
-        disabledStyle: other.disabledStyle,
-        inherits: other.inherits,
-      );
-    }
-
-    return style;
   }
 
   /// Linearly interpolate between two [WxAnchorStyle] objects.
@@ -213,9 +163,8 @@ class WxAnchorStyle with Diagnosticable {
     return WxAnchorStyle(
       margin: EdgeInsetsGeometry.lerp(a?.margin, b?.margin, t),
       padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
-      shape: lerpEnum(a?.shape, b?.shape, t),
-      radius: lerpDouble(a?.radius, b?.radius, t),
-      borderRadius: BorderRadius.lerp(a?.borderRadius, b?.borderRadius, t),
+      shape: ShapeBorder.lerp(a?.shape, b?.shape, t),
+      extent: Size.lerp(a?.extent, b?.extent, t),
       scale: lerpDouble(a?.scale, b?.scale, t),
       opacity: lerpDouble(a?.opacity, b?.opacity, t),
       overlayColor: Color.lerp(a?.overlayColor, b?.overlayColor, t),
@@ -228,8 +177,7 @@ class WxAnchorStyle with Diagnosticable {
         'margin': margin,
         'padding': padding,
         'shape': shape,
-        'radius': radius,
-        'borderRadius': borderRadius,
+        'extent': extent,
         'scale': scale,
         'opacity': opacity,
         'overlayColor': overlayColor,
@@ -286,13 +234,12 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
         WidgetEvent.disabled: disabledStyle,
       };
 
-  /// Default constructor for a driven [WxAnchorStyle].
+  /// Create a rectangle shaped [WxDrivenAnchorStyle].
   const WxDrivenAnchorStyle({
     super.margin,
     super.padding,
+    super.extent,
     super.shape,
-    super.radius,
-    super.borderRadius,
     super.scale,
     super.opacity,
     super.overlayColor,
@@ -305,9 +252,44 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     this.inherits,
   });
 
+  /// Create a circle shaped [WxDrivenAnchorStyle].
+  WxDrivenAnchorStyle.circle({
+    super.radius,
+    super.margin,
+    super.padding,
+    super.scale,
+    super.opacity,
+    super.overlayColor,
+    super.overlayOpacity,
+    super.overlayDisabled,
+    this.focusedStyle,
+    this.hoveredStyle,
+    this.pressedStyle,
+    this.disabledStyle,
+    this.inherits,
+  }) : super.circle();
+
+  /// Default constructor for a driven [WxAnchorStyle].
+  WxDrivenAnchorStyle.rectangle({
+    super.borderRadius,
+    super.margin,
+    super.padding,
+    super.extent,
+    super.scale,
+    super.opacity,
+    super.overlayColor,
+    super.overlayOpacity,
+    super.overlayDisabled,
+    this.focusedStyle,
+    this.hoveredStyle,
+    this.pressedStyle,
+    this.disabledStyle,
+    this.inherits,
+  }) : super.rectangle();
+
   /// Create a [WxDrivenAnchorStyle] with value
   /// from another [WxAnchorStyle].
-  WxDrivenAnchorStyle.from(
+  WxDrivenAnchorStyle.fromAncestor(
     super.enabled, {
     this.focusedStyle,
     this.hoveredStyle,
@@ -325,40 +307,6 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
         pressedStyle = resolver({WidgetEvent.pressed}),
         disabledStyle = resolver({WidgetEvent.disabled}),
         super.from(resolver({}));
-
-  /// Create a rectangle shaped [WxDrivenAnchorStyle].
-  const WxDrivenAnchorStyle.rectangle({
-    super.margin,
-    super.padding,
-    super.borderRadius,
-    super.scale,
-    super.opacity,
-    super.overlayColor,
-    super.overlayOpacity,
-    super.overlayDisabled,
-    this.focusedStyle,
-    this.hoveredStyle,
-    this.pressedStyle,
-    this.disabledStyle,
-    this.inherits,
-  }) : super.rectangle();
-
-  /// Create a circle shaped [WxDrivenAnchorStyle].
-  const WxDrivenAnchorStyle.circle({
-    super.margin,
-    super.padding,
-    super.radius,
-    super.scale,
-    super.opacity,
-    super.overlayColor,
-    super.overlayOpacity,
-    super.overlayDisabled,
-    this.focusedStyle,
-    this.hoveredStyle,
-    this.pressedStyle,
-    this.disabledStyle,
-    this.inherits,
-  }) : super.circle();
 
   /// Resolves the value for the given set of events
   /// if `value` is an event driven [WxAnchorStyle],
@@ -384,41 +332,63 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
   /// the given fields replaced with the new values.
   @override
   WxDrivenAnchorStyle copyWith({
-    EdgeInsetsGeometry? margin,
-    EdgeInsetsGeometry? padding,
-    BoxShape? shape,
-    double? radius,
-    BorderRadius? borderRadius,
-    double? scale,
-    double? opacity,
-    Color? overlayColor,
-    double? overlayOpacity,
-    bool? overlayDisabled,
-    bool? inherits,
+    margin,
+    padding,
+    shape,
+    extent,
+    scale,
+    opacity,
+    overlayColor,
+    overlayOpacity,
+    overlayDisabled,
     WxAnchorStyle? focusedStyle,
     WxAnchorStyle? hoveredStyle,
     WxAnchorStyle? pressedStyle,
     WxAnchorStyle? disabledStyle,
+    bool? inherits,
   }) {
-    return WxDrivenAnchorStyle.from(
-      super.copyWith(
-        margin: margin,
-        padding: padding,
-        shape: shape,
-        radius: radius,
-        borderRadius: borderRadius,
-        scale: scale,
-        opacity: opacity,
-        overlayColor: overlayColor,
-        overlayOpacity: overlayOpacity,
-        overlayDisabled: overlayDisabled,
-      ),
+    final ancestor = super.copyWith(
+      margin: margin,
+      padding: padding,
+      shape: shape,
+      extent: extent,
+      scale: scale,
+      opacity: opacity,
+      overlayColor: overlayColor,
+      overlayOpacity: overlayOpacity,
+      overlayDisabled: overlayDisabled,
+    );
+    return WxDrivenAnchorStyle.fromAncestor(
+      ancestor,
       inherits: inherits ?? this.inherits,
       focusedStyle: this.focusedStyle?.merge(focusedStyle) ?? focusedStyle,
       hoveredStyle: this.hoveredStyle?.merge(hoveredStyle) ?? hoveredStyle,
       pressedStyle: this.pressedStyle?.merge(pressedStyle) ?? pressedStyle,
       disabledStyle: this.disabledStyle?.merge(disabledStyle) ?? disabledStyle,
     );
+  }
+
+  @override
+  WxDrivenAnchorStyle merge(WxAnchorStyle? other) {
+    final result = WxDrivenAnchorStyle.fromAncestor(
+      super.merge(other),
+      inherits: inherits,
+      focusedStyle: focusedStyle,
+      hoveredStyle: hoveredStyle,
+      pressedStyle: pressedStyle,
+      disabledStyle: disabledStyle,
+    );
+
+    if (other is WxDrivenAnchorStyle) {
+      return result.copyWith(
+        inherits: other.inherits,
+        focusedStyle: other.focusedStyle,
+        hoveredStyle: other.hoveredStyle,
+        pressedStyle: other.pressedStyle,
+        disabledStyle: other.disabledStyle,
+      );
+    }
+    return result;
   }
 
   @override

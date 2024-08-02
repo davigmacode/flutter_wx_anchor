@@ -12,9 +12,10 @@ import 'feedback.dart';
 /// Has a configurable shape and can be configured
 /// to clip overlay that extend outside its bounds or not.
 class WxAnchor extends StatelessWidget {
-  /// Creates an area that responds to touch.
-  const WxAnchor({
+  /// Creates a rectangle shape area that responds to touch.
+  WxAnchor({
     super.key,
+    BorderRadius borderRadius = BorderRadius.zero,
     this.curve,
     this.duration,
     this.onTap,
@@ -31,9 +32,9 @@ class WxAnchor extends StatelessWidget {
     this.overlayColor,
     this.overlayOpacity,
     this.mouseCursor,
-    this.borderRadius,
     this.padding,
     this.margin,
+    this.extent,
     this.style,
     this.focusedStyle,
     this.hoveredStyle,
@@ -46,11 +47,47 @@ class WxAnchor extends StatelessWidget {
     this.feedbackDisabled = false,
     this.disabled = false,
     this.child,
-  })  : shape = null,
-        radius = null;
+  }) : shape = RoundedRectangleBorder(borderRadius: borderRadius);
 
   /// Creates a circle shaped area that responds to touch.
-  const WxAnchor.circle({
+  WxAnchor.circle({
+    super.key,
+    double? radius,
+    this.curve,
+    this.duration,
+    this.onTap,
+    this.onTapUp,
+    this.onTapDown,
+    this.onTapCancel,
+    this.onDoubleTap,
+    this.onLongPress,
+    this.onHover,
+    this.onFocus,
+    this.scale,
+    this.opacity,
+    this.overlayDisabled,
+    this.overlayColor,
+    this.overlayOpacity,
+    this.mouseCursor,
+    this.padding,
+    this.margin,
+    this.style,
+    this.focusedStyle,
+    this.hoveredStyle,
+    this.pressedStyle,
+    this.disabledStyle,
+    this.eventsController,
+    this.focusNode,
+    this.autofocus = false,
+    this.canRequestFocus = true,
+    this.feedbackDisabled = false,
+    this.disabled = false,
+    this.child,
+  })  : shape = const CircleBorder(),
+        extent = radius != null ? Size.fromRadius(radius) : null;
+
+  /// Creates an area that responds to touch.
+  const WxAnchor.raw({
     super.key,
     this.curve,
     this.duration,
@@ -68,9 +105,10 @@ class WxAnchor extends StatelessWidget {
     this.overlayColor,
     this.overlayOpacity,
     this.mouseCursor,
-    this.radius,
     this.padding,
     this.margin,
+    this.shape,
+    this.extent,
     this.style,
     this.focusedStyle,
     this.hoveredStyle,
@@ -83,8 +121,7 @@ class WxAnchor extends StatelessWidget {
     this.feedbackDisabled = false,
     this.disabled = false,
     this.child,
-  })  : shape = BoxShape.circle,
-        borderRadius = null;
+  });
 
   /// The curve to apply when animating
   /// the parameters of this widget.
@@ -136,20 +173,17 @@ class WxAnchor extends StatelessWidget {
   /// {@macro widgetarian.anchor.style.overlayOpacity}
   final double? overlayOpacity;
 
-  /// {@macro widgetarian.anchor.style.borderRadius}
-  final BorderRadius? borderRadius;
-
-  /// {@macro widgetarian.anchor.style.radius}
-  final double? radius;
-
-  /// {@macro widgetarian.anchor.style.shape}
-  final BoxShape? shape;
-
   /// {@macro widgetarian.anchor.style.padding}
   final EdgeInsetsGeometry? padding;
 
   /// {@macro widgetarian.anchor.style.margin}
   final EdgeInsetsGeometry? margin;
+
+  /// {@macro widgetarian.anchor.style.shape}
+  final ShapeBorder? shape;
+
+  /// {@macro widgetarian.anchor.style.extent}
+  final Size? extent;
 
   /// The [WxAnchorStyle] to apply
   final WxAnchorStyle? style;
@@ -200,12 +234,11 @@ class WxAnchor extends StatelessWidget {
   final Widget? child;
 
   WxAnchorStyle get effectiveStyle {
-    return const WxAnchorStyle().merge(style).copyWith(
+    return const WxDrivenAnchorStyle().merge(style).copyWith(
           margin: margin,
           padding: padding,
           shape: shape,
-          radius: radius,
-          borderRadius: borderRadius,
+          extent: extent,
           scale: scale,
           opacity: opacity,
           overlayColor: overlayColor,
@@ -221,7 +254,9 @@ class WxAnchor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final anchorTheme = WxAnchorTheme.of(context);
-    final themedStyle = anchorTheme.style.merge(effectiveStyle);
+    final themedStyle = const WxDrivenAnchorStyle()
+        .merge(anchorTheme.style)
+        .merge(effectiveStyle);
     final parentState = _WxAnchorRenderProvider.of(context);
     return _WxAnchorRender(
       parentState: parentState,
@@ -259,33 +294,23 @@ class WxAnchor extends StatelessWidget {
       if (onTapUp != null) 'tap up',
       if (onTapCancel != null) 'tap cancel',
     ];
-    properties
-        .add(IterableProperty<String>('gestures', gestures, ifEmpty: '<none>'));
-    properties.add(DiagnosticsProperty<bool>('disabled', disabled));
-    properties
-        .add(DiagnosticsProperty<bool>('feedbackDisabled', feedbackDisabled));
-    properties
-        .add(DiagnosticsProperty<bool>('canRequestFocus', canRequestFocus));
-    properties.add(DiagnosticsProperty<bool>('autofocus', autofocus));
-    properties.add(DiagnosticsProperty<FocusNode?>('focusNode', focusNode));
-    properties.add(DiagnosticsProperty<WidgetEventController?>(
-        'eventsController', eventsController));
-    properties.add(DiagnosticsProperty<EdgeInsetsGeometry?>('margin', margin));
-    properties
-        .add(DiagnosticsProperty<EdgeInsetsGeometry?>('padding', padding));
-    properties.add(EnumProperty<BoxShape>('shape', shape));
-    properties.add(DoubleProperty('radius', radius));
-    properties
-        .add(DiagnosticsProperty<BorderRadius?>('borderRadius', borderRadius));
+    properties.add(IterableProperty('gestures', gestures, ifEmpty: '<none>'));
+    properties.add(DiagnosticsProperty('disabled', disabled));
+    properties.add(DiagnosticsProperty('feedbackDisabled', feedbackDisabled));
+    properties.add(DiagnosticsProperty('canRequestFocus', canRequestFocus));
+    properties.add(DiagnosticsProperty('autofocus', autofocus));
+    properties.add(DiagnosticsProperty('focusNode', focusNode));
+    properties.add(DiagnosticsProperty('eventsController', eventsController));
+    properties.add(DiagnosticsProperty('margin', margin));
+    properties.add(DiagnosticsProperty('padding', padding));
+    properties.add(DiagnosticsProperty('shape', shape));
+    properties.add(DiagnosticsProperty('extent', extent));
     properties.add(DoubleProperty('overlayOpacity', overlayOpacity));
     properties.add(ColorProperty('overlayColor', overlayColor));
-    properties
-        .add(DiagnosticsProperty<bool>('overlayDisabled', overlayDisabled));
-    properties
-        .add(DiagnosticsProperty<MouseCursor?>('mouseCursor', mouseCursor));
-    properties.add(DiagnosticsProperty<WxAnchorStyle?>('style', style));
-    properties.add(
-        DiagnosticsProperty<WxAnchorStyle>('effectiveStyle', effectiveStyle));
+    properties.add(DiagnosticsProperty('overlayDisabled', overlayDisabled));
+    properties.add(DiagnosticsProperty('mouseCursor', mouseCursor));
+    properties.add(DiagnosticsProperty('style', style));
+    properties.add(DiagnosticsProperty('effectiveStyle', effectiveStyle));
   }
 }
 
@@ -372,7 +397,7 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
   void setStyle() {
     final raw = widget.style;
     final resolved = WxDrivenAnchorStyle.evaluate(raw, widgetEvents.value);
-    style = style.merge(resolved);
+    style = WxAnchorStyle.from(resolved);
   }
 
   bool get _canRequestFocus {
@@ -437,20 +462,29 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
     widget.onFocus?.call(value);
   }
 
+  @protected
+  void populateWidgetEvents() {
+    widgetEvents.update({WidgetEvent.disabled: widget.disabled});
+  }
+
   @override
   void initState() {
-    initWidgetEvents(widget.eventsController);
-    widgetEvents.toggle(WidgetEvent.disabled, widget.disabled);
-    setStyle();
     super.initState();
+    initWidgetEvents(widget.eventsController);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    populateWidgetEvents();
   }
 
   @override
   void didUpdateWidget(_WxAnchorRender oldWidget) {
     if (mounted) {
-      updateWidgetEvents(oldWidget.eventsController, widget.eventsController);
-      widgetEvents.toggle(WidgetEvent.disabled, widget.disabled);
       super.didUpdateWidget(oldWidget);
+      updateWidgetEvents(widget.eventsController);
+      populateWidgetEvents();
     }
   }
 
@@ -470,7 +504,12 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
     );
 
     if (style.padding != null) {
-      result = Padding(padding: style.padding!, child: result);
+      result = AnimatedPadding(
+        curve: widget.curve,
+        duration: widget.duration,
+        padding: style.padding!,
+        child: result,
+      );
     }
 
     if (widget.enabled && widget.clickable) {
@@ -527,8 +566,7 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
         curve: widget.curve,
         duration: widget.duration,
         shape: style.shape,
-        radius: style.radius,
-        borderRadius: style.borderRadius,
+        extent: style.extent,
         color: style.overlayColor,
         opacity: style.overlayOpacity,
         child: result,
@@ -536,7 +574,12 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
     }
 
     if (style.margin != null) {
-      result = Padding(padding: style.margin!, child: result);
+      result = AnimatedPadding(
+        curve: widget.curve,
+        duration: widget.duration,
+        padding: style.margin!,
+        child: result,
+      );
     }
 
     return result;
