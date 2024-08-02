@@ -28,7 +28,7 @@ class WxAnchor extends StatelessWidget {
     this.onFocus,
     this.scale,
     this.opacity,
-    this.overlayDisabled,
+    this.overlay,
     this.overlayColor,
     this.overlayOpacity,
     this.mouseCursor,
@@ -65,7 +65,7 @@ class WxAnchor extends StatelessWidget {
     this.onFocus,
     this.scale,
     this.opacity,
-    this.overlayDisabled,
+    this.overlay,
     this.overlayColor,
     this.overlayOpacity,
     this.mouseCursor,
@@ -101,7 +101,7 @@ class WxAnchor extends StatelessWidget {
     this.onFocus,
     this.scale,
     this.opacity,
-    this.overlayDisabled,
+    this.overlay,
     this.overlayColor,
     this.overlayOpacity,
     this.mouseCursor,
@@ -164,8 +164,8 @@ class WxAnchor extends StatelessWidget {
   /// {@macro widgetarian.anchor.style.opacity}
   final double? opacity;
 
-  /// {@macro widgetarian.anchor.style.overlayDisabled}
-  final bool? overlayDisabled;
+  /// Whether the overlay is enabled or not
+  final bool? overlay;
 
   /// {@macro widgetarian.anchor.style.overlayColor}
   final Color? overlayColor;
@@ -243,7 +243,6 @@ class WxAnchor extends StatelessWidget {
           opacity: opacity,
           overlayColor: overlayColor,
           overlayOpacity: overlayOpacity,
-          overlayDisabled: overlayDisabled,
           focusedStyle: focusedStyle,
           hoveredStyle: hoveredStyle,
           pressedStyle: pressedStyle,
@@ -257,6 +256,7 @@ class WxAnchor extends StatelessWidget {
     final themedStyle = const WxDrivenAnchorStyle()
         .merge(anchorTheme.style)
         .merge(effectiveStyle);
+    final themedOverlay = overlay ?? anchorTheme.overlay;
     final parentState = _WxAnchorRenderProvider.of(context);
     return _WxAnchorRender(
       parentState: parentState,
@@ -277,6 +277,7 @@ class WxAnchor extends StatelessWidget {
       autofocus: autofocus,
       canRequestFocus: canRequestFocus,
       feedbackDisabled: feedbackDisabled,
+      overlay: themedOverlay,
       disabled: disabled,
       style: themedStyle,
       child: child,
@@ -307,7 +308,7 @@ class WxAnchor extends StatelessWidget {
     properties.add(DiagnosticsProperty('extent', extent));
     properties.add(DoubleProperty('overlayOpacity', overlayOpacity));
     properties.add(ColorProperty('overlayColor', overlayColor));
-    properties.add(DiagnosticsProperty('overlayDisabled', overlayDisabled));
+    properties.add(DiagnosticsProperty('overlayDisabled', overlay));
     properties.add(DiagnosticsProperty('mouseCursor', mouseCursor));
     properties.add(DiagnosticsProperty('style', style));
     properties.add(DiagnosticsProperty('effectiveStyle', effectiveStyle));
@@ -335,6 +336,7 @@ class _WxAnchorRender extends StatefulWidget {
     this.canRequestFocus = true,
     this.feedbackDisabled = false,
     this.disabled = false,
+    this.overlay = true,
     required this.style,
     this.child,
   });
@@ -358,6 +360,7 @@ class _WxAnchorRender extends StatefulWidget {
   final bool canRequestFocus;
   final bool feedbackDisabled;
   final bool disabled;
+  final bool overlay;
   final WxAnchorStyle style;
   final Widget? child;
 
@@ -561,7 +564,7 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
       );
     }
 
-    if (style.overlayEnabled && widget.enabled && widget.clickable) {
+    if (widget.overlay && widget.enabled && widget.clickable) {
       result = AnimatedOverlay(
         curve: widget.curve,
         duration: widget.duration,

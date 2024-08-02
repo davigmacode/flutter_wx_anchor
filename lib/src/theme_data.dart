@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wx_utils/wx_utils.dart';
 import 'style.dart';
-import 'theme_preset.dart';
 
 /// Defines the visual properties of [WxAnchor].
 ///
@@ -47,47 +46,43 @@ class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
   /// The [WxAnchorStyle] to be applied to the anchor widget
   final WxAnchorStyle style;
 
+  /// Whether the overlay is enabled or not
+  final bool overlay;
+
   /// Creates a theme data that can be used for [WxAnchorTheme].
   const WxAnchorThemeData({
-    required this.curve,
-    required this.duration,
-    required this.platform,
-    required this.style,
+    this.curve = Curves.linear,
+    this.duration = const Duration(milliseconds: 150),
+    this.platform = TargetPlatform.android,
+    this.style = const WxAnchorStyle(),
+    this.overlay = true,
   });
 
-  /// An [WxAnchorThemeData] with some reasonable default values.
-  static final fallback = WxAnchorThemeData(
-    curve: Curves.linear,
-    duration: const Duration(milliseconds: 150),
-    platform: defaultTargetPlatform,
-    style: const WxAnchorStyle(),
-  );
-
   /// Creates a [WxAnchorThemeData] from another one that probably null.
-  WxAnchorThemeData.from([WxAnchorThemeData? other])
-      : curve = other?.curve ?? fallback.curve,
+  WxAnchorThemeData.from([
+    WxAnchorThemeData? other,
+    WxAnchorThemeData fallback = const WxAnchorThemeData(),
+  ])  : curve = other?.curve ?? fallback.curve,
         duration = other?.duration ?? fallback.duration,
         platform = other?.platform ?? fallback.platform,
-        style = other?.style ?? fallback.style;
-
-  /// A [WxAnchorThemeData] with default values.
-  factory WxAnchorThemeData.defaults(BuildContext context) =>
-      WxAnchorThemeDefaults(context);
+        style = other?.style ?? fallback.style,
+        overlay = other?.overlay ?? fallback.overlay;
 
   /// Creates a copy of this [WxAnchorThemeData] but with
   /// the given fields replaced with the new values.
   @override
-  WxAnchorThemeData copyWith({
-    Curve? curve,
-    Duration? duration,
-    TargetPlatform? platform,
-    WxAnchorStyle? style,
-  }) {
+  WxAnchorThemeData copyWith(
+      {Curve? curve,
+      Duration? duration,
+      TargetPlatform? platform,
+      WxAnchorStyle? style,
+      bool? overlay}) {
     return WxAnchorThemeData(
       curve: curve ?? this.curve,
       duration: duration ?? this.duration,
       platform: platform ?? this.platform,
       style: this.style.merge(style),
+      overlay: overlay ?? this.overlay,
     );
   }
 
@@ -102,6 +97,7 @@ class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
       duration: other.duration,
       platform: other.platform,
       style: other.style,
+      overlay: other.overlay,
     );
   }
 
@@ -113,6 +109,7 @@ class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
       duration: lerpEnum(duration, other.duration, t) ?? duration,
       platform: lerpEnum(platform, other.platform, t) ?? platform,
       style: WxAnchorStyle.lerp(style, other.style, t) ?? style,
+      overlay: lerpBool(overlay, other.overlay, t) ?? overlay,
     );
   }
 
@@ -121,6 +118,7 @@ class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
         'duration': duration,
         'platform': platform,
         'style': style,
+        'overlay': overlay,
       };
 
   @override

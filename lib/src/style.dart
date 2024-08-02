@@ -50,16 +50,6 @@ class WxAnchorStyle with Diagnosticable {
   /// {@endtemplate}
   final double? overlayOpacity;
 
-  /// {@template widgetarian.anchor.style.overlayDisabled}
-  /// Whether the overlay is disabled or not
-  /// {@endtemplate}
-  final bool? overlayDisabled;
-
-  /// {@template widgetarian.anchor.style.overlayEnabled}
-  /// Whether the overlay is enabled or not
-  /// {@endtemplate}
-  bool get overlayEnabled => overlayDisabled != true;
-
   /// Create a raw anchor style.
   const WxAnchorStyle({
     this.margin,
@@ -70,7 +60,6 @@ class WxAnchorStyle with Diagnosticable {
     this.opacity,
     this.overlayColor,
     this.overlayOpacity,
-    this.overlayDisabled,
   });
 
   /// Create an anchor style with rectangle shape.
@@ -83,7 +72,6 @@ class WxAnchorStyle with Diagnosticable {
     this.opacity,
     this.overlayColor,
     this.overlayOpacity,
-    this.overlayDisabled,
   }) : shape = RoundedRectangleBorder(borderRadius: borderRadius);
 
   /// Create an anchor style with circle shape.
@@ -95,7 +83,6 @@ class WxAnchorStyle with Diagnosticable {
     this.opacity,
     this.overlayColor,
     this.overlayOpacity,
-    this.overlayDisabled,
   })  : shape = const CircleBorder(),
         extent = radius != null ? Size.fromRadius(radius) : null;
 
@@ -108,8 +95,7 @@ class WxAnchorStyle with Diagnosticable {
         scale = other?.scale,
         opacity = other?.opacity,
         overlayColor = other?.overlayColor,
-        overlayOpacity = other?.overlayOpacity,
-        overlayDisabled = other?.overlayDisabled;
+        overlayOpacity = other?.overlayOpacity;
 
   /// Creates a copy of this [WxAnchorStyle] but with
   /// the given fields replaced with the new values.
@@ -122,7 +108,6 @@ class WxAnchorStyle with Diagnosticable {
     double? opacity,
     Color? overlayColor,
     double? overlayOpacity,
-    bool? overlayDisabled,
     bool? inherits,
   }) {
     return WxAnchorStyle(
@@ -134,7 +119,6 @@ class WxAnchorStyle with Diagnosticable {
       opacity: opacity ?? this.opacity,
       overlayColor: overlayColor ?? this.overlayColor,
       overlayOpacity: overlayOpacity ?? this.overlayOpacity,
-      overlayDisabled: overlayDisabled ?? this.overlayDisabled,
     );
   }
 
@@ -153,7 +137,6 @@ class WxAnchorStyle with Diagnosticable {
       opacity: other.opacity,
       overlayColor: other.overlayColor,
       overlayOpacity: other.overlayOpacity,
-      overlayDisabled: other.overlayDisabled,
     );
   }
 
@@ -169,7 +152,6 @@ class WxAnchorStyle with Diagnosticable {
       opacity: lerpDouble(a?.opacity, b?.opacity, t),
       overlayColor: Color.lerp(a?.overlayColor, b?.overlayColor, t),
       overlayOpacity: lerpDouble(a?.overlayOpacity, b?.overlayOpacity, t),
-      overlayDisabled: lerpBool(a?.overlayDisabled, b?.overlayDisabled, t),
     );
   }
 
@@ -182,7 +164,6 @@ class WxAnchorStyle with Diagnosticable {
         'opacity': opacity,
         'overlayColor': overlayColor,
         'overlayOpacity': overlayOpacity,
-        'overlayDisabled': overlayDisabled,
       };
 
   @override
@@ -244,7 +225,6 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.opacity,
     super.overlayColor,
     super.overlayOpacity,
-    super.overlayDisabled,
     this.focusedStyle,
     this.hoveredStyle,
     this.pressedStyle,
@@ -261,7 +241,6 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.opacity,
     super.overlayColor,
     super.overlayOpacity,
-    super.overlayDisabled,
     this.focusedStyle,
     this.hoveredStyle,
     this.pressedStyle,
@@ -279,7 +258,6 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.opacity,
     super.overlayColor,
     super.overlayOpacity,
-    super.overlayDisabled,
     this.focusedStyle,
     this.hoveredStyle,
     this.pressedStyle,
@@ -340,7 +318,6 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     opacity,
     overlayColor,
     overlayOpacity,
-    overlayDisabled,
     WxAnchorStyle? focusedStyle,
     WxAnchorStyle? hoveredStyle,
     WxAnchorStyle? pressedStyle,
@@ -356,7 +333,6 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
       opacity: opacity,
       overlayColor: overlayColor,
       overlayOpacity: overlayOpacity,
-      overlayDisabled: overlayDisabled,
     );
     return WxDrivenAnchorStyle.fromAncestor(
       ancestor,

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'style.dart';
 import 'theme_data.dart';
+import 'theme_preset.dart';
 
 /// A Widget that controls how descendant [WxAnchor]s should look like.
 class WxAnchorTheme extends InheritedTheme {
@@ -26,6 +27,7 @@ class WxAnchorTheme extends InheritedTheme {
     Duration? duration,
     TargetPlatform? platform,
     WxAnchorStyle? style,
+    bool? overlay,
     WxAnchorThemeData? data,
     required Widget child,
   }) {
@@ -39,11 +41,29 @@ class WxAnchorTheme extends InheritedTheme {
                 duration: duration,
                 platform: platform,
                 style: style,
+                overlay: overlay,
               ),
           child: child,
         );
       },
     );
+  }
+
+  /// The [data] from the closest instance of
+  /// this class that encloses the given context.
+  ///
+  /// Typical usage is as follows:
+  ///
+  /// ```dart
+  /// WxSheetThemeData theme = WxSheetTheme.of(context);
+  /// ```
+  static WxAnchorThemeData? maybeOf(BuildContext context) {
+    final parentTheme =
+        context.dependOnInheritedWidgetOfExactType<WxAnchorTheme>();
+    if (parentTheme != null) return parentTheme.data;
+
+    final globalTheme = Theme.of(context).extension<WxAnchorThemeData>();
+    return globalTheme;
   }
 
   /// The [WxAnchorTheme] from the closest instance of
@@ -55,13 +75,10 @@ class WxAnchorTheme extends InheritedTheme {
   /// AnchorThemeData theme = AnchorTheme.of(context);
   /// ```
   static WxAnchorThemeData of(BuildContext context) {
-    final parentTheme =
-        context.dependOnInheritedWidgetOfExactType<WxAnchorTheme>();
-    if (parentTheme != null) return parentTheme.data;
+    final parent = WxAnchorTheme.maybeOf(context);
+    if (parent != null) return parent;
 
-    final globalTheme = Theme.of(context).extension<WxAnchorThemeData>();
-    final defaultTheme = WxAnchorThemeData.defaults(context);
-    return defaultTheme.merge(globalTheme);
+    return WxAnchorThemeDefaults(context);
   }
 
   @override

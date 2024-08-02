@@ -102,7 +102,7 @@ class MyHomePage extends StatelessWidget {
                 onTap: () {},
                 opacity: 1,
                 scale: 1,
-                overlayDisabled: true,
+                overlay: false,
                 hoveredStyle: const WxAnchorStyle(opacity: .7, scale: 1),
                 pressedStyle: const WxAnchorStyle(opacity: 1, scale: 1.5),
                 child: const Icon(Icons.star),
