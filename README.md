@@ -36,7 +36,7 @@ WxAnchor.circle(
 ```dart
 WxAnchor(
   onTap: () {},
-  overlayDisabled: true,
+  overlay: false,
   child: const Text('Click Here'),
 )
 ```
@@ -73,7 +73,7 @@ WxAnchor.circle(
   onTap: () {},
   opacity: 1,
   scale: 1,
-  overlayDisabled: true,
+  overlay: false,
   hoveredStyle: const WxAnchorStyle(opacity: .7, scale: 1.1),
   pressedStyle: const WxAnchorStyle(opacity: 1, scale: 1),
   child: const Icon(Icons.chat),

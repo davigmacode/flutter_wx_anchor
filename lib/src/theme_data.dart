@@ -98,26 +98,28 @@ class WxAnchorThemeData extends ThemeExtension<WxAnchorThemeData>
   /// Creates a copy of this [WxAnchorThemeData] but with
   /// the given fields replaced with the new values.
   @override
-  WxAnchorThemeData copyWith(
-      {Curve? curve,
-      Duration? duration,
-      TargetPlatform? platform,
-      WxAnchorStyle? style,
-      bool? overlay,
-      bool? feedback,
-      bool? focusable,
-      bool? disabled,
-      MouseCursor? mouseCursor}) {
+  WxAnchorThemeData copyWith({
+    Curve? curve,
+    Duration? duration,
+    TargetPlatform? platform,
+    WxAnchorStyle? style,
+    bool? overlay,
+    bool? feedback,
+    bool? focusable,
+    bool? disabled,
+    MouseCursor? mouseCursor,
+  }) {
     return WxAnchorThemeData(
-        curve: curve ?? this.curve,
-        duration: duration ?? this.duration,
-        platform: platform ?? this.platform,
-        style: this.style.merge(style),
-        overlay: overlay ?? this.overlay,
-        feedback: feedback ?? this.feedback,
-        focusable: focusable ?? this.focusable,
-        disabled: disabled ?? this.disabled,
-        mouseCursor: mouseCursor ?? this.mouseCursor);
+      curve: curve ?? this.curve,
+      duration: duration ?? this.duration,
+      platform: platform ?? this.platform,
+      style: this.style.merge(style),
+      overlay: overlay ?? this.overlay,
+      feedback: feedback ?? this.feedback,
+      focusable: focusable ?? this.focusable,
+      disabled: disabled ?? this.disabled,
+      mouseCursor: mouseCursor ?? this.mouseCursor,
+    );
   }
 
   /// Creates a copy of this [WxAnchorThemeData] but with
