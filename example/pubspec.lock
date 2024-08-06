@@ -220,17 +220,17 @@ packages:
     dependency: transitive
     description:
       name: widget_event
-      sha256: "5b993854ecea0eeca3bb74042b6a56fd95fa7c0015980496156e5f349dab478e"
+      sha256: cccacb342f367085404c062faae0954cf7e1b0a0256f358269b4d26a54e822da
       url: "https://pub.dev"
     source: hosted
-    version: "1.10.2"
+    version: "2.0.1"
   wx_anchor:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "1.3.0"
+    version: "2.0.1"
   wx_text:
     dependency: "direct main"
     description:

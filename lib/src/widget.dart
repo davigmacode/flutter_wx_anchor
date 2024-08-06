@@ -471,7 +471,10 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
 
   @protected
   void populateWidgetEvents() {
-    widgetEvents.update({WidgetEvent.disabled: widget.disabled});
+    widgetEvents.update(
+      {WidgetEvent.disabled: widget.disabled},
+      forceNotify: true,
+    );
   }
 
   @override

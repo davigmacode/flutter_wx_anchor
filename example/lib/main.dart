@@ -75,6 +75,7 @@ class MyHomePage extends StatelessWidget {
                   overlayOpacity: 0.25,
                   overlayColor: Colors.blue,
                   borderRadius: BorderRadius.circular(5),
+                  extent: const Size(120, 30),
                 ),
                 borderRadius: BorderRadius.circular(15),
                 child: const Text('Custom Overlay'),
