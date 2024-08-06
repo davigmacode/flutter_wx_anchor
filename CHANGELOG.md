@@ -1,3 +1,7 @@
+## 2.0.2
+
+* Update `widget_event` to v2.0.2
+
 ## 2.0.1
 
 * Fixed readme
