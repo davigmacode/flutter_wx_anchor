@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:wx_utils/wx_utils.dart';
+import 'package:wx_anchor/wx_utils.dart';
 import 'style.dart';
 
 /// Defines the visual properties of [WxAnchor].

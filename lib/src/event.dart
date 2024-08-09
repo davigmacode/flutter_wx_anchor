@@ -1,4 +1,4 @@
-import 'package:widget_event/widget_event.dart';
+import 'package:wx_anchor/wx_event.dart';
 
 /// Interactive events that [WxAnchor] can take on
 /// when receiving input from the user.

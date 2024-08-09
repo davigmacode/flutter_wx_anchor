@@ -21,6 +21,8 @@ dependencies:
     sdk: flutter
   widget_event: ^2.0.1
   wx_utils: ^0.0.4
+  animated_icon_theme: ^1.0.4
+  animated_transform: ^1.0.6
 
 dev_dependencies:
   flutter_test:

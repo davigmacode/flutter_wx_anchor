@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
-import 'package:widget_event/widget_event.dart';
-import 'package:wx_utils/wx_utils.dart';
+import 'package:wx_anchor/wx_event.dart';
+import 'package:wx_anchor/wx_utils.dart';
 import 'event.dart';
 
 /// The style to be applied to anchor widget
@@ -74,6 +74,21 @@ class WxAnchorStyle with Diagnosticable {
   /// {@endtemplate}
   final TextAlign? textAlign;
 
+  /// {@template widgetarian.anchor.style.iconColor}
+  /// Color to be used for the icon's inside the anchor.
+  /// {@endtemplate}
+  final Color? iconColor;
+
+  /// {@template widgetarian.anchor.style.iconOpacity}
+  /// Opacity to be apply to [iconColor].
+  /// {@endtemplate}
+  final double? iconOpacity;
+
+  /// {@template widgetarian.anchor.style.iconSize}
+  /// The size of the icon's inside the anchor, in logical pixels.
+  /// {@endtemplate}
+  final double? iconSize;
+
   /// Create a raw anchor style.
   const WxAnchorStyle({
     this.margin,
@@ -87,6 +102,9 @@ class WxAnchorStyle with Diagnosticable {
     this.textColor,
     this.textStyle,
     this.textAlign,
+    this.iconColor,
+    this.iconOpacity,
+    this.iconSize,
   });
 
   /// Create an anchor style with rectangle shape.
@@ -102,6 +120,9 @@ class WxAnchorStyle with Diagnosticable {
     this.textColor,
     this.textStyle,
     this.textAlign,
+    this.iconColor,
+    this.iconOpacity,
+    this.iconSize,
   }) : overlayShape = RoundedRectangleBorder(borderRadius: borderRadius);
 
   /// Create an anchor style with circle shape.
@@ -116,6 +137,9 @@ class WxAnchorStyle with Diagnosticable {
     this.textColor,
     this.textStyle,
     this.textAlign,
+    this.iconColor,
+    this.iconOpacity,
+    this.iconSize,
   })  : overlayShape = const CircleBorder(),
         overlayExtent =
             overlayRadius != null ? Size.fromRadius(overlayRadius) : null;
@@ -132,7 +156,10 @@ class WxAnchorStyle with Diagnosticable {
         overlayExtent = other?.overlayExtent,
         textColor = other?.textColor,
         textStyle = other?.textStyle,
-        textAlign = other?.textAlign;
+        textAlign = other?.textAlign,
+        iconColor = other?.iconColor,
+        iconOpacity = other?.iconOpacity,
+        iconSize = other?.iconSize;
 
   /// Creates a copy of this [WxAnchorStyle] but with
   /// the given fields replaced with the new values.
@@ -148,6 +175,9 @@ class WxAnchorStyle with Diagnosticable {
     Color? textColor,
     TextStyle? textStyle,
     TextAlign? textAlign,
+    Color? iconColor,
+    double? iconOpacity,
+    double? iconSize,
   }) {
     return WxAnchorStyle(
       margin: margin ?? this.margin,
@@ -161,6 +191,9 @@ class WxAnchorStyle with Diagnosticable {
       textColor: textColor ?? this.textColor,
       textStyle: textStyle ?? this.textStyle,
       textAlign: textAlign ?? this.textAlign,
+      iconColor: iconColor ?? this.iconColor,
+      iconOpacity: iconOpacity ?? this.iconOpacity,
+      iconSize: iconSize ?? this.iconSize,
     );
   }
 
@@ -182,6 +215,9 @@ class WxAnchorStyle with Diagnosticable {
       textColor: other.textColor,
       textStyle: other.textStyle,
       textAlign: other.textAlign,
+      iconColor: other.iconColor,
+      iconOpacity: other.iconOpacity,
+      iconSize: other.iconSize,
     );
   }
 
@@ -200,6 +236,9 @@ class WxAnchorStyle with Diagnosticable {
       textColor: Color.lerp(a?.textColor, b?.textColor, t),
       textStyle: TextStyle.lerp(a?.textStyle, b?.textStyle, t),
       textAlign: lerpEnum(a?.textAlign, b?.textAlign, t),
+      iconColor: Color.lerp(a?.iconColor, b?.iconColor, t),
+      iconOpacity: lerpDouble(a?.iconOpacity, b?.iconOpacity, t),
+      iconSize: lerpDouble(a?.iconSize, b?.iconSize, t),
     );
   }
 
@@ -215,6 +254,9 @@ class WxAnchorStyle with Diagnosticable {
         'textColor': textColor,
         'textStyle': textStyle,
         'textAlign': textAlign,
+        'iconColor': iconColor,
+        'iconOpacity': iconOpacity,
+        'iconSize': iconSize,
       };
 
   @override
@@ -279,6 +321,9 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.textColor,
     super.textStyle,
     super.textAlign,
+    super.iconColor,
+    super.iconOpacity,
+    super.iconSize,
     this.focusedStyle,
     this.hoveredStyle,
     this.pressedStyle,
@@ -298,6 +343,9 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.textColor,
     super.textStyle,
     super.textAlign,
+    super.iconColor,
+    super.iconOpacity,
+    super.iconSize,
     this.focusedStyle,
     this.hoveredStyle,
     this.pressedStyle,
@@ -318,6 +366,9 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.textColor,
     super.textStyle,
     super.textAlign,
+    super.iconColor,
+    super.iconOpacity,
+    super.iconSize,
     this.focusedStyle,
     this.hoveredStyle,
     this.pressedStyle,
@@ -381,6 +432,9 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     textColor,
     textStyle,
     textAlign,
+    iconColor,
+    iconOpacity,
+    iconSize,
     WxAnchorStyle? focusedStyle,
     WxAnchorStyle? hoveredStyle,
     WxAnchorStyle? pressedStyle,
@@ -399,6 +453,9 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
       textColor: textColor,
       textStyle: textStyle,
       textAlign: textAlign,
+      iconColor: iconColor,
+      iconOpacity: iconOpacity,
+      iconSize: iconSize,
     );
     return WxDrivenAnchorStyle.fromAncestor(
       ancestor,

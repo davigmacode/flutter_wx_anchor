@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:widget_event/widget_event.dart';
+import 'package:wx_anchor/wx_event.dart';
+import 'package:wx_anchor/animated_transform.dart';
+import 'package:wx_anchor/animated_icon_theme.dart';
 import 'overlay.dart';
 import 'style.dart';
 import 'theme.dart';
@@ -35,6 +37,9 @@ class WxAnchor extends StatelessWidget {
     this.textColor,
     this.textStyle,
     this.textAlign,
+    this.iconColor,
+    this.iconOpacity,
+    this.iconSize,
     this.mouseCursor,
     this.padding,
     this.margin,
@@ -74,6 +79,9 @@ class WxAnchor extends StatelessWidget {
     this.textColor,
     this.textStyle,
     this.textAlign,
+    this.iconColor,
+    this.iconOpacity,
+    this.iconSize,
     this.mouseCursor,
     this.padding,
     this.margin,
@@ -116,6 +124,9 @@ class WxAnchor extends StatelessWidget {
     this.textColor,
     this.textStyle,
     this.textAlign,
+    this.iconColor,
+    this.iconOpacity,
+    this.iconSize,
     this.mouseCursor,
     this.padding,
     this.margin,
@@ -198,6 +209,15 @@ class WxAnchor extends StatelessWidget {
   /// {@macro widgetarian.anchor.style.textAlign}
   final TextAlign? textAlign;
 
+  /// {@macro widgetarian.anchor.style.iconColor}
+  final Color? iconColor;
+
+  /// {@macro widgetarian.anchor.style.iconOpacity}
+  final double? iconOpacity;
+
+  /// {@macro widgetarian.anchor.style.iconSize}
+  final double? iconSize;
+
   /// {@macro widgetarian.anchor.style.padding}
   final EdgeInsetsGeometry? padding;
 
@@ -265,6 +285,9 @@ class WxAnchor extends StatelessWidget {
           textColor: textColor,
           textStyle: textStyle,
           textAlign: textAlign,
+          iconColor: iconColor,
+          iconOpacity: iconOpacity,
+          iconSize: iconSize,
           focusedStyle: focusedStyle,
           hoveredStyle: hoveredStyle,
           pressedStyle: pressedStyle,
@@ -328,12 +351,6 @@ class WxAnchor extends StatelessWidget {
     properties.add(DiagnosticsProperty('autofocus', autofocus));
     properties.add(DiagnosticsProperty('focusNode', focusNode));
     properties.add(DiagnosticsProperty('eventsController', eventsController));
-    properties.add(DiagnosticsProperty('margin', margin));
-    properties.add(DiagnosticsProperty('padding', padding));
-    properties.add(DiagnosticsProperty('shape', overlayShape));
-    properties.add(DiagnosticsProperty('extent', overlayExtent));
-    properties.add(DoubleProperty('overlayOpacity', overlayOpacity));
-    properties.add(ColorProperty('overlayColor', overlayColor));
     properties.add(DiagnosticsProperty('overlay', overlay));
     properties.add(DiagnosticsProperty('mouseCursor', mouseCursor));
     properties.add(DiagnosticsProperty('style', style));
@@ -575,23 +592,19 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
       ),
     );
 
-    if (widget.clickable) {
-      result = AnimatedScale(
-        scale: style.scale ?? 1,
-        curve: widget.curve,
-        duration: widget.duration,
-        child: result,
-      );
-    }
+    result = AnimatedTransform(
+      scale: style.scale ?? 1,
+      curve: widget.curve,
+      duration: widget.duration,
+      child: result,
+    );
 
-    if (widget.clickable) {
-      result = AnimatedOpacity(
-        opacity: style.opacity ?? 1,
-        curve: widget.curve,
-        duration: widget.duration,
-        child: result,
-      );
-    }
+    result = AnimatedOpacity(
+      opacity: style.opacity ?? 1,
+      curve: widget.curve,
+      duration: widget.duration,
+      child: result,
+    );
 
     if (widget.overlay && widget.enabled && widget.clickable) {
       result = AnimatedOverlay(
@@ -613,6 +626,17 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
         child: result,
       );
     }
+
+    result = AnimatedIconTheme(
+      curve: widget.curve,
+      duration: widget.duration,
+      data: IconThemeData(
+        color: style.iconColor,
+        size: style.iconSize,
+        opacity: style.iconOpacity,
+      ),
+      child: result,
+    );
 
     result = AnimatedDefaultTextStyle(
       curve: widget.curve,
