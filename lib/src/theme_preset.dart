@@ -14,15 +14,16 @@ class WxAnchorThemePreset extends WxAnchorThemeData {
   get platform => appTheme.platform;
 }
 
-class WxAnchorThemeDefaults extends WxAnchorThemePreset {
-  WxAnchorThemeDefaults(super.context);
+class WxAnchorThemeDefault extends WxAnchorThemePreset {
+  WxAnchorThemeDefault(super.context);
 
   @override
-  get style => const WxDrivenAnchorStyle(
-        overlayShape: RoundedRectangleBorder(),
+  get style => WxDrivenAnchorStyle(
+        textStyle: appTheme.textTheme.labelLarge,
+        overlayShape: const RoundedRectangleBorder(),
         overlayOpacity: 0,
-        focusedStyle: WxAnchorStyle(overlayOpacity: 0.15),
-        hoveredStyle: WxAnchorStyle(overlayOpacity: 0.05),
-        pressedStyle: WxAnchorStyle(overlayOpacity: 0.1),
+        focusedStyle: const WxAnchorStyle(overlayOpacity: 0.15),
+        hoveredStyle: const WxAnchorStyle(overlayOpacity: 0.05),
+        pressedStyle: const WxAnchorStyle(overlayOpacity: 0.1),
       ).merge(super.style);
 }

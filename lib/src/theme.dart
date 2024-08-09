@@ -86,7 +86,7 @@ class WxAnchorTheme extends InheritedTheme {
     final parent = WxAnchorTheme.maybeOf(context);
     if (parent != null) return parent;
 
-    return WxAnchorThemeDefaults(context);
+    return WxAnchorThemeDefault(context);
   }
 
   @override

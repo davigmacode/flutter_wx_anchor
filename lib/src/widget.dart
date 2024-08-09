@@ -641,7 +641,8 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
     result = AnimatedDefaultTextStyle(
       curve: widget.curve,
       duration: widget.duration,
-      style: const TextStyle()
+      style: DefaultTextStyle.of(context)
+          .style
           .merge(style.textStyle)
           .copyWith(color: style.textColor),
       textAlign: style.textAlign,
