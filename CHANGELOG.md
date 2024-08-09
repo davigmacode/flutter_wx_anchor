@@ -1,3 +1,11 @@
+## 2.1.0
+
+* Refactor overlay properties name
+* Added option to text styling
+* Added option for icon styling
+* Use animated_transform for transformation handling
+* Re-export reusable deps
+
 ## 2.0.2
 
 * Update `widget_event` to v2.0.2
