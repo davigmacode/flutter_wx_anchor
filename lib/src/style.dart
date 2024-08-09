@@ -50,6 +50,30 @@ class WxAnchorStyle with Diagnosticable {
   /// {@endtemplate}
   final Size? overlayExtent;
 
+  /// {@template widgetarian.anchor.style.textColor}
+  /// The text color to be applied to child.
+  /// {@endtemplate}
+  final Color? textColor;
+
+  /// {@template widgetarian.anchor.style.textStyle}
+  /// The style to be applied to the anchor's child.
+  ///
+  /// The default child style is [TextTheme.bodyText1] from the overall
+  /// theme's [ThemeData.textTheme].
+  //
+  /// This only has an effect on widgets that respect the [DefaultTextStyle],
+  /// such as [Text].
+  /// {@endtemplate}
+  final TextStyle? textStyle;
+
+  /// {@template widgetarian.anchor.style.textAlign}
+  /// The align to be applied to the anchor's child.
+  //
+  /// This only has an effect on widgets that respect the [DefaultTextStyle],
+  /// such as [Text].
+  /// {@endtemplate}
+  final TextAlign? textAlign;
+
   /// Create a raw anchor style.
   const WxAnchorStyle({
     this.margin,
@@ -60,6 +84,9 @@ class WxAnchorStyle with Diagnosticable {
     this.overlayColor,
     this.overlayOpacity,
     this.overlayExtent,
+    this.textColor,
+    this.textStyle,
+    this.textAlign,
   });
 
   /// Create an anchor style with rectangle shape.
@@ -72,6 +99,9 @@ class WxAnchorStyle with Diagnosticable {
     this.overlayColor,
     this.overlayOpacity,
     this.overlayExtent,
+    this.textColor,
+    this.textStyle,
+    this.textAlign,
   }) : overlayShape = RoundedRectangleBorder(borderRadius: borderRadius);
 
   /// Create an anchor style with circle shape.
@@ -83,6 +113,9 @@ class WxAnchorStyle with Diagnosticable {
     this.overlayColor,
     this.overlayOpacity,
     double? overlayRadius,
+    this.textColor,
+    this.textStyle,
+    this.textAlign,
   })  : overlayShape = const CircleBorder(),
         overlayExtent =
             overlayRadius != null ? Size.fromRadius(overlayRadius) : null;
@@ -96,7 +129,10 @@ class WxAnchorStyle with Diagnosticable {
         overlayShape = other?.overlayShape,
         overlayColor = other?.overlayColor,
         overlayOpacity = other?.overlayOpacity,
-        overlayExtent = other?.overlayExtent;
+        overlayExtent = other?.overlayExtent,
+        textColor = other?.textColor,
+        textStyle = other?.textStyle,
+        textAlign = other?.textAlign;
 
   /// Creates a copy of this [WxAnchorStyle] but with
   /// the given fields replaced with the new values.
@@ -109,7 +145,9 @@ class WxAnchorStyle with Diagnosticable {
     Color? overlayColor,
     double? overlayOpacity,
     Size? overlayExtent,
-    bool? inherits,
+    Color? textColor,
+    TextStyle? textStyle,
+    TextAlign? textAlign,
   }) {
     return WxAnchorStyle(
       margin: margin ?? this.margin,
@@ -120,6 +158,9 @@ class WxAnchorStyle with Diagnosticable {
       overlayColor: overlayColor ?? this.overlayColor,
       overlayOpacity: overlayOpacity ?? this.overlayOpacity,
       overlayExtent: overlayExtent ?? this.overlayExtent,
+      textColor: textColor ?? this.textColor,
+      textStyle: textStyle ?? this.textStyle,
+      textAlign: textAlign ?? this.textAlign,
     );
   }
 
@@ -138,6 +179,9 @@ class WxAnchorStyle with Diagnosticable {
       overlayColor: other.overlayColor,
       overlayOpacity: other.overlayOpacity,
       overlayExtent: other.overlayExtent,
+      textColor: other.textColor,
+      textStyle: other.textStyle,
+      textAlign: other.textAlign,
     );
   }
 
@@ -153,6 +197,9 @@ class WxAnchorStyle with Diagnosticable {
       overlayColor: Color.lerp(a?.overlayColor, b?.overlayColor, t),
       overlayOpacity: lerpDouble(a?.overlayOpacity, b?.overlayOpacity, t),
       overlayExtent: Size.lerp(a?.overlayExtent, b?.overlayExtent, t),
+      textColor: Color.lerp(a?.textColor, b?.textColor, t),
+      textStyle: TextStyle.lerp(a?.textStyle, b?.textStyle, t),
+      textAlign: lerpEnum(a?.textAlign, b?.textAlign, t),
     );
   }
 
@@ -165,6 +212,9 @@ class WxAnchorStyle with Diagnosticable {
         'overlayColor': overlayColor,
         'overlayOpacity': overlayOpacity,
         'overlayExtent': overlayExtent,
+        'textColor': textColor,
+        'textStyle': textStyle,
+        'textAlign': textAlign,
       };
 
   @override
@@ -226,6 +276,9 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.overlayExtent,
     super.overlayColor,
     super.overlayOpacity,
+    super.textColor,
+    super.textStyle,
+    super.textAlign,
     this.focusedStyle,
     this.hoveredStyle,
     this.pressedStyle,
@@ -242,6 +295,9 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.overlayColor,
     super.overlayOpacity,
     super.overlayRadius,
+    super.textColor,
+    super.textStyle,
+    super.textAlign,
     this.focusedStyle,
     this.hoveredStyle,
     this.pressedStyle,
@@ -259,6 +315,9 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     super.overlayColor,
     super.overlayOpacity,
     super.overlayExtent,
+    super.textColor,
+    super.textStyle,
+    super.textAlign,
     this.focusedStyle,
     this.hoveredStyle,
     this.pressedStyle,
@@ -319,6 +378,9 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
     overlayOpacity,
     overlayShape,
     overlayExtent,
+    textColor,
+    textStyle,
+    textAlign,
     WxAnchorStyle? focusedStyle,
     WxAnchorStyle? hoveredStyle,
     WxAnchorStyle? pressedStyle,
@@ -334,6 +396,9 @@ class WxDrivenAnchorStyle extends WxAnchorStyle
       overlayOpacity: overlayOpacity,
       overlayShape: overlayShape,
       overlayExtent: overlayExtent,
+      textColor: textColor,
+      textStyle: textStyle,
+      textAlign: textAlign,
     );
     return WxDrivenAnchorStyle.fromAncestor(
       ancestor,

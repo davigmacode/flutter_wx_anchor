@@ -27,7 +27,7 @@ WxAnchor(
 // Circle shape
 WxAnchor.circle(
   onTap: () {},
-  radius: 20, // overlay radius
+  overlayRadius: 20, // overlay radius
   child: const Icon(Icons.chat),
 )
 ```
@@ -60,9 +60,9 @@ WxAnchor(
 // Changes overlay radius based on user interaction
 WxAnchor.circle(
   onTap: () {},
-  radius: 0,
-  hoveredStyle: const WxAnchorStyle.circle(radius: 25),
-  pressedStyle: const WxAnchorStyle.circle(radius: 20),
+  overlayRadius: 0,
+  hoveredStyle: const WxAnchorStyle.circle(overlayRadius: 25),
+  pressedStyle: const WxAnchorStyle.circle(overlayRadius: 20),
   child: const Icon(Icons.power_off),
 )
 ```

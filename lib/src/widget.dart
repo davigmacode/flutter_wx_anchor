@@ -32,6 +32,9 @@ class WxAnchor extends StatelessWidget {
     this.overlayColor,
     this.overlayOpacity,
     this.overlayExtent,
+    this.textColor,
+    this.textStyle,
+    this.textAlign,
     this.mouseCursor,
     this.padding,
     this.margin,
@@ -68,6 +71,9 @@ class WxAnchor extends StatelessWidget {
     this.overlayColor,
     this.overlayOpacity,
     double? overlayRadius,
+    this.textColor,
+    this.textStyle,
+    this.textAlign,
     this.mouseCursor,
     this.padding,
     this.margin,
@@ -107,6 +113,9 @@ class WxAnchor extends StatelessWidget {
     this.overlayColor,
     this.overlayOpacity,
     this.overlayExtent,
+    this.textColor,
+    this.textStyle,
+    this.textAlign,
     this.mouseCursor,
     this.padding,
     this.margin,
@@ -180,6 +189,15 @@ class WxAnchor extends StatelessWidget {
   /// {@macro widgetarian.anchor.style.overlayExtent}
   final Size? overlayExtent;
 
+  /// {@macro widgetarian.anchor.style.textColor}
+  final Color? textColor;
+
+  /// {@macro widgetarian.anchor.style.textStyle}
+  final TextStyle? textStyle;
+
+  /// {@macro widgetarian.anchor.style.textAlign}
+  final TextAlign? textAlign;
+
   /// {@macro widgetarian.anchor.style.padding}
   final EdgeInsetsGeometry? padding;
 
@@ -238,12 +256,15 @@ class WxAnchor extends StatelessWidget {
     return const WxDrivenAnchorStyle().merge(style).copyWith(
           margin: margin,
           padding: padding,
-          overlayShape: overlayShape,
           scale: scale,
           opacity: opacity,
+          overlayShape: overlayShape,
           overlayColor: overlayColor,
           overlayOpacity: overlayOpacity,
           overlayExtent: overlayExtent,
+          textColor: textColor,
+          textStyle: textStyle,
+          textAlign: textAlign,
           focusedStyle: focusedStyle,
           hoveredStyle: hoveredStyle,
           pressedStyle: pressedStyle,
@@ -592,6 +613,16 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
         child: result,
       );
     }
+
+    result = AnimatedDefaultTextStyle(
+      curve: widget.curve,
+      duration: widget.duration,
+      style: const TextStyle()
+          .merge(style.textStyle)
+          .copyWith(color: style.textColor),
+      textAlign: style.textAlign,
+      child: result,
+    );
 
     return result;
   }
