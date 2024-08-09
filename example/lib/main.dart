@@ -61,21 +61,21 @@ class MyHomePage extends StatelessWidget {
               ),
               WxAnchor(
                 onTap: () {},
-                extent: Size.zero,
+                overlayExtent: Size.zero,
                 overlayColor: Colors.amber,
                 focusedStyle: const WxAnchorStyle(
                   overlayOpacity: 0.25,
-                  extent: Size(130, 40),
+                  overlayExtent: Size(130, 40),
                 ),
                 hoveredStyle: const WxAnchorStyle(
                   overlayOpacity: 0.15,
-                  extent: Size(130, 40),
+                  overlayExtent: Size(130, 40),
                 ),
                 pressedStyle: WxAnchorStyle.rectangle(
                   overlayOpacity: 0.25,
                   overlayColor: Colors.blue,
+                  overlayExtent: const Size(120, 30),
                   borderRadius: BorderRadius.circular(5),
-                  extent: const Size(120, 30),
                 ),
                 borderRadius: BorderRadius.circular(15),
                 child: const Text('Custom Overlay'),
@@ -97,10 +97,10 @@ class MyHomePage extends StatelessWidget {
               ),
               WxAnchor.circle(
                 onTap: () {},
-                radius: 0,
-                hoveredStyle: WxAnchorStyle.circle(radius: 25),
-                pressedStyle: WxAnchorStyle.circle(radius: 20),
-                focusedStyle: WxAnchorStyle.circle(radius: 20),
+                overlayRadius: 0,
+                hoveredStyle: WxAnchorStyle.circle(overlayRadius: 25),
+                pressedStyle: WxAnchorStyle.circle(overlayRadius: 20),
+                focusedStyle: WxAnchorStyle.circle(overlayRadius: 20),
                 child: const Icon(Icons.power_off),
               ),
               WxAnchor.circle(

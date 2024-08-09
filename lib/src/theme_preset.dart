@@ -19,7 +19,7 @@ class WxAnchorThemeDefaults extends WxAnchorThemePreset {
 
   @override
   get style => const WxDrivenAnchorStyle(
-        shape: RoundedRectangleBorder(),
+        overlayShape: RoundedRectangleBorder(),
         overlayOpacity: 0,
         focusedStyle: WxAnchorStyle(overlayOpacity: 0.15),
         hoveredStyle: WxAnchorStyle(overlayOpacity: 0.05),

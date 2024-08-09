@@ -31,10 +31,10 @@ class WxAnchor extends StatelessWidget {
     this.overlay,
     this.overlayColor,
     this.overlayOpacity,
+    this.overlayExtent,
     this.mouseCursor,
     this.padding,
     this.margin,
-    this.extent,
     this.style,
     this.focusedStyle,
     this.hoveredStyle,
@@ -47,12 +47,11 @@ class WxAnchor extends StatelessWidget {
     this.feedback,
     this.disabled,
     this.child,
-  }) : shape = RoundedRectangleBorder(borderRadius: borderRadius);
+  }) : overlayShape = RoundedRectangleBorder(borderRadius: borderRadius);
 
   /// Creates a circle shaped area that responds to touch.
   WxAnchor.circle({
     super.key,
-    double? radius,
     this.curve,
     this.duration,
     this.onTap,
@@ -68,6 +67,7 @@ class WxAnchor extends StatelessWidget {
     this.overlay,
     this.overlayColor,
     this.overlayOpacity,
+    double? overlayRadius,
     this.mouseCursor,
     this.padding,
     this.margin,
@@ -83,8 +83,9 @@ class WxAnchor extends StatelessWidget {
     this.feedback,
     this.disabled,
     this.child,
-  })  : shape = const CircleBorder(),
-        extent = radius != null ? Size.fromRadius(radius) : null;
+  })  : overlayShape = const CircleBorder(),
+        overlayExtent =
+            overlayRadius != null ? Size.fromRadius(overlayRadius) : null;
 
   /// Creates an area that responds to touch.
   const WxAnchor.raw({
@@ -102,13 +103,13 @@ class WxAnchor extends StatelessWidget {
     this.scale,
     this.opacity,
     this.overlay,
+    this.overlayShape,
     this.overlayColor,
     this.overlayOpacity,
+    this.overlayExtent,
     this.mouseCursor,
     this.padding,
     this.margin,
-    this.shape,
-    this.extent,
     this.style,
     this.focusedStyle,
     this.hoveredStyle,
@@ -167,23 +168,23 @@ class WxAnchor extends StatelessWidget {
   /// Whether the overlay is enabled or not
   final bool? overlay;
 
+  /// {@macro widgetarian.anchor.style.overlayShape}
+  final ShapeBorder? overlayShape;
+
   /// {@macro widgetarian.anchor.style.overlayColor}
   final Color? overlayColor;
 
   /// {@macro widgetarian.anchor.style.overlayOpacity}
   final double? overlayOpacity;
 
+  /// {@macro widgetarian.anchor.style.overlayExtent}
+  final Size? overlayExtent;
+
   /// {@macro widgetarian.anchor.style.padding}
   final EdgeInsetsGeometry? padding;
 
   /// {@macro widgetarian.anchor.style.margin}
   final EdgeInsetsGeometry? margin;
-
-  /// {@macro widgetarian.anchor.style.shape}
-  final ShapeBorder? shape;
-
-  /// {@macro widgetarian.anchor.style.extent}
-  final Size? extent;
 
   /// The [WxAnchorStyle] to apply
   final WxAnchorStyle? style;
@@ -237,12 +238,12 @@ class WxAnchor extends StatelessWidget {
     return const WxDrivenAnchorStyle().merge(style).copyWith(
           margin: margin,
           padding: padding,
-          shape: shape,
-          extent: extent,
+          overlayShape: overlayShape,
           scale: scale,
           opacity: opacity,
           overlayColor: overlayColor,
           overlayOpacity: overlayOpacity,
+          overlayExtent: overlayExtent,
           focusedStyle: focusedStyle,
           hoveredStyle: hoveredStyle,
           pressedStyle: pressedStyle,
@@ -308,8 +309,8 @@ class WxAnchor extends StatelessWidget {
     properties.add(DiagnosticsProperty('eventsController', eventsController));
     properties.add(DiagnosticsProperty('margin', margin));
     properties.add(DiagnosticsProperty('padding', padding));
-    properties.add(DiagnosticsProperty('shape', shape));
-    properties.add(DiagnosticsProperty('extent', extent));
+    properties.add(DiagnosticsProperty('shape', overlayShape));
+    properties.add(DiagnosticsProperty('extent', overlayExtent));
     properties.add(DoubleProperty('overlayOpacity', overlayOpacity));
     properties.add(ColorProperty('overlayColor', overlayColor));
     properties.add(DiagnosticsProperty('overlay', overlay));
@@ -575,8 +576,8 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
       result = AnimatedOverlay(
         curve: widget.curve,
         duration: widget.duration,
-        shape: style.shape,
-        extent: style.extent,
+        shape: style.overlayShape,
+        extent: style.overlayExtent,
         color: style.overlayColor,
         opacity: style.overlayOpacity,
         child: result,
