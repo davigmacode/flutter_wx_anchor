@@ -1,3 +1,7 @@
+## 2.1.1
+
+* Fixed Feedback class conflict in flutter v3.24
+
 ## 2.1.0
 
 * Refactor overlay properties name
