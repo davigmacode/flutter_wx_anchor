@@ -41,7 +41,7 @@ import 'package:flutter/widgets.dart';
 ///   }
 /// }
 /// ```
-abstract class Feedback {
+abstract class PlatformFeedback {
   /// Provides platform-specific feedback for a tap.
   ///
   /// On Android the click system sound is played. On iOS this is a no-op.

@@ -263,7 +263,7 @@ class WxAnchor extends StatelessWidget {
   ///
   /// See also:
   ///
-  ///  * [Feedback] for providing platform-specific feedback to certain actions.
+  ///  * [PlatformFeedback] for providing platform-specific feedback to certain actions.
   final bool? feedback;
 
   /// Whether or not this widget is disabled for interaction.
@@ -461,7 +461,7 @@ class _WxAnchorRenderState extends State<_WxAnchorRender>
     if (!childrenActive) {
       if (widget.onTap != null) {
         if (!widget.feedback) {
-          Feedback.forTap(context, widget.platform);
+          PlatformFeedback.forTap(context, widget.platform);
         }
         widget.onTap?.call();
       }
