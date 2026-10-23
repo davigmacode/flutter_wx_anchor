@@ -1,3 +1,8 @@
+# wx_anchor
+
+> [!IMPORTANT]
+> **Repository Moved to Monorepo**: Active development of `wx_anchor` has migrated to the official [**davigmacode/flutter_wx**](https://github.com/davigmacode/flutter_wx) monorepo under [packages/wx_anchor](https://github.com/davigmacode/flutter_wx/tree/main/packages/wx_anchor).
+
 [![Pub Version](https://img.shields.io/pub/v/wx_anchor)](https://pub.dev/packages/wx_anchor) ![GitHub](https://img.shields.io/github/license/davigmacode/flutter_wx_anchor) [![GitHub](https://badgen.net/badge/icon/buymeacoffee?icon=buymeacoffee&color=yellow&label)](https://www.buymeacoffee.com/davigmacode) [![GitHub](https://badgen.net/badge/icon/ko-fi?icon=kofi&color=red&label)](https://ko-fi.com/davigmacode)
 
 Clickable zone within a widget that activates an interactive overlay upon touch or hover.
